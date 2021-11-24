@@ -1,15 +1,16 @@
 var id = 0
 
 class novoCliente {
-    constructor(cpf, nome, telefone, cep, uf, email, senha) {
+    constructor(cpf, nome, telefone, cep, endereco, cidade, uf, email, senha) {
+        
         this.id = id++
         this.cpf = this.autenticacaoCPF(cpf)
         this.nome = this.autenticacaoNome(nome)
         this.telefone = this.autenticacaoTelefone(telefone)
-        this.endereco = this.autenticacaoCEP(logradouro)
-        this.cep = this.autenticacaoCEP(cep)
-        this.cidade = this.autenticacaoCEP(localidade)
-        this.uf = this.autenticacaoCEP(uf)
+        this.cep = cep
+        this.endereco = endereco
+        this.cidade = cidade
+        this.uf = uf
         this.email = this.autenticacaoEmail(email)
         this.senha = this.autenticacaoSenha(senha)
     }
@@ -46,18 +47,15 @@ class novoCliente {
         // console.log(soma2);
         let segundaAutenticacao = ((soma2 * 10) % 11).toString()
 
-        const substituicao1 = filter(() => {
-            primeiraAutenticacao === 10 || segundaAutenticacao === 10
-            return 0
-        })
-        const substituicao2 = filter(() => {
-            primeiraAutenticacao === 11 || segundaAutenticacao === 11
-            return 0
-        })
+        const substituicao1 = primeiraAutenticacao === 10 ? 0 : primeiraAutenticacao === 11 ? 0 : primeiraAutenticacao
+        console.log(substituicao1);
+        const substituicao2 = segundaAutenticacao === 10 ? 0 : segundaAutenticacao === 11 ? 0 : segundaAutenticacao
+        console.log(substituicao2);
         if (primeiraAutenticacao === splitCPF[9] && segundaAutenticacao === splitCPF[10]) {
-            return `Os dígitos retornados são ${primeiraAutenticacao}${segundaAutenticacao}. O CPF é valido!`
+            return cpf
         } else {
-            return `Os dígitos retornados são ${primeiraAutenticacao}${segundaAutenticacao}. o CPF é inválido!`
+
+            throw new console.error(`Os dígitos retornados são ${primeiraAutenticacao}${segundaAutenticacao}. o CPF é inválido!`);
         }
 
 
@@ -78,35 +76,23 @@ class novoCliente {
             return telefone
         }
     }
-    autenticacaoCEP(atributo) {
-        async cep => {
-            const resposta = await fetch(`viacep.com.br/ws/${cep}/json/`)
-            console.log(resposta);
-            const data = await resposta.json()
-            console.log(data);
-            if (atributo === cep) return atributo.cep
-            else if (atributo === logradouro) return atributo.logradouro
-            else if (atributo === cidade) return atributo.localidade
-            else if (atributo === uf) return atributo.uf
-        }
-        return this.cep
-    }
+
     autenticacaoEmail(email) {
         const mail = /\S+@\S+\.\S+/
         mail.test(email)
         return email
     }
     autenticacaoSenha(senha) {
-        const retorno = false
+        let retorno = false
         const letrasMaiusculas = /[A-Z]/
         const letrasMinisculas = /[a-z]/
-        const numeros = /[0-9]/
+
         const caracteresEspeciais = /[!|@|#|$|%|^|&|*|(|)|-|_]/
         if (senha.length !== 8) { return retorno }
         else { console.log(senha); }
         let auxMa = 0
         let auxMin = 0
-        let auxNum = 0
+  
         let auxCEspeciais = 0
         for (let i = 0; i < senha.length; i++) {
             if (letrasMaiusculas.test(senha[i])) {
@@ -115,23 +101,26 @@ class novoCliente {
             else if (letrasMinisculas.test(senha[i])) {
                 auxMin++
             }
-            else if (numeros.test(senha[i])) {
-                auxNum++
-            }
+          
             else if (caracteresEspeciais.test(senha[i])) {
                 auxCEspeciais++
             }
-      
-        auxMa > 0 (
-            auxMin > 0 (
-                auxNum > 0 (
-                    auxCEspeciais > 0 ? retorno = true : retorno
-                )
-            )
-        )
-        return retorno
+
         }
+     
+        if (auxMa > 0) {
+            if (auxMin > 0) {
+
+                if (auxCEspeciais > 0) {
+                    retorno = true
+                    return senha
+                }
+
+            }
+        }
+        return retorno
     }
 }
 
 
+module.exports = novoCliente

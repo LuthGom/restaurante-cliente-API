@@ -4,8 +4,9 @@
   "description": "Trabalho final do módulo 4 de Dev. Web FullStack da Resilia Educação",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1", 
-    "start": "nodemon app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js",
+    "dev": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/LuthGom/restaurante-cliente-API#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "sqlite3": "^5.0.2"
   }
 }

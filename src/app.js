@@ -1,8 +1,28 @@
 const express = require('express')
 const app = express()
-const port = 3003
+const port = 3000
 
-const novoCliente = require('novoCliente')
+// Importando os controllers
+const cliente = require('./controllers/clientes-controllers')
 
-app.listen(port, () => { console.log(`Servidor rodando em htp://localhost:${port}/`);})
-module.exports = app
+// importando o banco de dados
+
+
+// The middlewares
+app.use(express.json())
+app.use((req, res, next) => {
+    console.log('eu fiz isso aqui funcionar, biotch 1');
+
+    next()
+})
+
+//rota de cada controller
+cliente(app)
+app.listen(port, () => { console.log(`Servidor rodando em: http://localhost:${port}/`) })
+
+module.exports = app => {
+    app.get('/',(req, res) =>{
+        console.log('rodando, biótch');
+        res.send(200).json({})
+    })
+}
