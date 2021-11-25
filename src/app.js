@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
-
+const bd = require('./infra/sqlite-db')
 // Importando os controllers
 const cliente = require('./controllers/clientes-controllers')
 
@@ -17,12 +17,7 @@ app.use((req, res, next) => {
 })
 
 //rota de cada controller
-cliente(app)
+cliente(app, bd)
 app.listen(port, () => { console.log(`Servidor rodando em: http://localhost:${port}/`) })
 
-module.exports = app => {
-    app.get('/',(req, res) =>{
-        console.log('rodando, biótch');
-        res.send(200).json({})
-    })
-}
+module.exports = app

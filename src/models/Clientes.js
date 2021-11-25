@@ -1,20 +1,5 @@
-var id = 0
-
 class novoCliente {
-    constructor(cpf, nome, telefone, cep, endereco, cidade, uf, email, senha) {
-        
-        this.id = id++
-        this.cpf = this.autenticacaoCPF(cpf)
-        this.nome = this.autenticacaoNome(nome)
-        this.telefone = this.autenticacaoTelefone(telefone)
-        this.cep = cep
-        this.endereco = endereco
-        this.cidade = cidade
-        this.uf = uf
-        this.email = this.autenticacaoEmail(email)
-        this.senha = this.autenticacaoSenha(senha)
-    }
-    autenticacaoCPF(cpf) {
+    static autenticacaoCPF(cpf) {
         cpf = cpf.replace(/\D/g, '')
         let splitCPF = cpf.toString().split('')
         console.log(splitCPF);
@@ -55,34 +40,34 @@ class novoCliente {
             return cpf
         } else {
 
-            throw new console.error(`Os dígitos retornados são ${primeiraAutenticacao}${segundaAutenticacao}. o CPF é inválido!`);
+            throw new Error (`Os dígitos retornados são ${primeiraAutenticacao}${segundaAutenticacao}. o CPF é inválido!`);
         }
 
 
     }
 
 
-    autenticacaoNome(nome) {
+    static autenticacaoNome(nome) {
         if (nome.length < 8) {
-            throw new console.error('Campo nome deve ter ao menos 8 caracteres!');
+            throw new Error('Campo nome deve ter ao menos 8 caracteres!');
         } else {
             return nome.toUpperCase()
         }
     }
-    autenticacaoTelefone(telefone) {
+    static autenticacaoTelefone(telefone) {
         if (telefone.length < 11) {
-            throw new console.error('Campo telefone deve contar ao menos 11 digitos!');
+            throw new Error('Campo telefone deve contar ao menos 11 digitos!');
         } else {
             return telefone
         }
     }
 
-    autenticacaoEmail(email) {
+    static autenticacaoEmail(email) {
         const mail = /\S+@\S+\.\S+/
         mail.test(email)
         return email
     }
-    autenticacaoSenha(senha) {
+    static autenticacaoSenha(senha) {
         let retorno = false
         const letrasMaiusculas = /[A-Z]/
         const letrasMinisculas = /[a-z]/
@@ -92,7 +77,7 @@ class novoCliente {
         else { console.log(senha); }
         let auxMa = 0
         let auxMin = 0
-  
+
         let auxCEspeciais = 0
         for (let i = 0; i < senha.length; i++) {
             if (letrasMaiusculas.test(senha[i])) {
@@ -101,24 +86,37 @@ class novoCliente {
             else if (letrasMinisculas.test(senha[i])) {
                 auxMin++
             }
-          
+
             else if (caracteresEspeciais.test(senha[i])) {
                 auxCEspeciais++
             }
 
         }
-     
+
         if (auxMa > 0) {
             if (auxMin > 0) {
 
                 if (auxCEspeciais > 0) {
+                    console.log("senha" + senha);
                     retorno = true
-                    return senha
+                
                 }
 
             }
         }
-        return retorno
+        return senha
+    }
+    constructor(cpf, nome, telefone, cep, endereco, cidade, uf, email, senha) {
+
+        this.cpf = novoCliente.autenticacaoCPF(cpf)
+        this.nome = novoCliente.autenticacaoNome(nome)
+        this.telefone = novoCliente.autenticacaoTelefone(telefone)
+        this.cep = cep
+        this.endereco = endereco
+        this.cidade = cidade
+        this.uf = uf
+        this.email = novoCliente.autenticacaoEmail(email)
+        this.senha = novoCliente.autenticacaoSenha(senha)
     }
 }
 
