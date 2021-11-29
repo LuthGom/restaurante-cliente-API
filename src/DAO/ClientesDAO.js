@@ -46,9 +46,9 @@ class ClientesDAO {
         console.log(id);
         const SELECT_BY_ID = `SELECT * FROM CLIENTES WHERE ID = ?`
         return new Promise((resolve, reject) => {
-            this.db.all(SELECT_BY_ID,id, (error, rows) => {
-                if(error) {
-                    reject ({
+            this.db.all(SELECT_BY_ID, id, (error, rows) => {
+                if (error) {
+                    reject({
                         "mensagem": error.message,
                         "erro": true
                     })
@@ -61,29 +61,47 @@ class ClientesDAO {
             })
         })
     }
-    atualizaCliente(id, cliente) {
-        try {
-            const UPDATE = `
-            UPDATE CLIENTES
-            SET CPF = ?, NOME = ?, TELEFONE = ?, CEP = ?, ENDERECO = ?, CIDADE = ?, UF = ?, EMAIL = ?, SENHA = ?`
-            return new Promise ((resolve, reject)=> {
-                this.db.run(UPDATE, [cliente.cpf, cliente.nome, cliente.telefone, cliente.cep, cliente.endereco, cliente.cidade, cliente.uf, cliente.email, cliente.senha],id,
-                    (error)=>{
-                        if(error) {
-                            reject(error)
-                        } else {
-                            resolve({
-                                "mensagem": `Cliente de id ${id} atualizado com sucesso.`,
-                                "usuario": cliente,
-                                "erro": false
-                            })
-                        }
+    async deletaCliente(id) {
+        return new Promise((resolve, reject) => {
+            const deletar = `DELETE FROM CLIENTES WHERE ID = ?`
+            this.db.run(deletar, id, (erro) => {
+                if (erro) {
+                    console.log("fuck");
+                    reject({
+                        "mensagem": erro.message
                     })
+                } else {
+                    resolve({
+                        "mensagem": `Cliente de id ${id} excluído com sucesso!`,
+                        "erro": false
+                    })
+                }
             })
-        } catch (error){
-            console.log(Error);
-            throw new Error(error.message)
-        }
+        })
+    }
+    atualizaCliente(id, cliente) {
+
+        return new Promise((resolve, reject) => {
+            const UPDATE = `
+                UPDATE CLIENTES
+                SET CPF = ?, NOME = ?, TELEFONE = ?, CEP = ?, ENDERECO = ?, CIDADE = ?, UF = ?, EMAIL = ?, SENHA = ? WHERE ID = ?`
+                const array = [...cliente, id]
+                console.log(array);
+            this.db.run(UPDATE,
+                array,
+                (error) => {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve({
+                            "mensagem": `Cliente de id ${id} atualizado com sucesso.`,
+                            "cliente": cliente,
+                            "erro": false
+                        })
+                    }
+                })
+        })
+
     }
 }
 module.exports = ClientesDAO

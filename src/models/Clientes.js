@@ -108,7 +108,8 @@ class novoCliente {
     }
     constructor(cpf, nome, telefone, cep, endereco, cidade, uf, email, senha) {
 
-        this.cpf = novoCliente.autenticacaoCPF(cpf)
+        // this.cpf = novoCliente.autenticacaoCPF(cpf)
+        this.cpf = cpf
         this.nome = novoCliente.autenticacaoNome(nome)
         this.telefone = novoCliente.autenticacaoTelefone(telefone)
         this.cep = cep

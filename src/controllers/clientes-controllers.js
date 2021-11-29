@@ -39,16 +39,16 @@ const clientes = (app, bd) => {
   })
 
   app.put('/clientes/:id', async(req, res) => {
-    const id = req.params.id
-    const body = req.body
-
+    
     try {
+      const id = req.params.id
+      const body = req.body
       const respostaGet = await novoClienteDAO.retornaClientesDesejados(id,body)
       const clienteAntigo = respostaGet.requisicao[0]
 
 
       if (clienteAntigo) {
-        const clienteAtualizado = new Cliente(
+        const clienteAtualizado = [
           body.cpf || clienteAntigo.CPF,
           body.nome || clienteAntigo.NOME,
           body.telefone || clienteAntigo.TELEFONE,
@@ -57,13 +57,14 @@ const clientes = (app, bd) => {
           body.cidade || clienteAntigo.CIDADE,
           body.uf || clienteAntigo.UF,
           body.email || clienteAntigo.EMAIL,
-          body.senha || clienteAntigo.SENHA,
-        )
+          body.senha || clienteAntigo.SENHA
+        ]
+        console.log(clienteAtualizado);
         const resposta = await novoClienteDAO.atualizaCliente(id, clienteAtualizado)
         res.json(resposta)
       } else {
         res.json({
-          "mensagem": `Cliente com cpf "${id} não encontrado`,
+          "mensagem": `Cliente com id "${id} não encontrado`,
           "error": true
         })
       }
@@ -76,22 +77,17 @@ const clientes = (app, bd) => {
     }
   })
 
-  app.delete('clientes/:cpf', (req, res) => {
-    const cpf = req.params.cpf
+  app.delete('/clientes/:id', async (req, res) => {
+    try {
+      const id = req.params.id
+      const resposta = await novoClienteDAO.deletaCliente(id)
+      res.json(resposta)
+    } catch (error) {
+      console.log("caral");
+      res.status(404).json({
 
-
-    const indexCliente = bd.clientes.findIndex((clientes => clientes.cpf === cpf))
-
-    if (indexCliente > -1) {
-      const clienteDeletado = bd.clientes.splice(indexCliente, 1)
-      res.json({
-        "deletado": clienteDeletado,
-        "error": false
-      })
-    } else {
-      res.json({
-        "mensagem": `Cliente com cpf "${cpf}" inexistente.`,
-        "error": true
+        "mensagem": error.message,
+        "erro": true
       })
     }
   })
