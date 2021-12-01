@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 const bd = require('./infra/sqlite-db')
 // Importando os controllers
 const cliente = require('./controllers/clientes-controllers')
