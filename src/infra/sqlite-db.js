@@ -14,7 +14,6 @@ const bd = new sqlite3.Database(caminhoArq);
 // assim que fecharmos o servidor
 process.on('SIGINT', () =>
     bd.close(() => {
-        console.log('BD encerrado!');
         process.exit(0);
     })
 );

@@ -1,4 +1,6 @@
-<h1> restaurante-cliente-API </h1>
+<video width="320" heigth="240" controls>
+    <source src="..midia/RESTAURANT REST API" type="video/mp4">
+</video>
 
 #Em construção#
 
