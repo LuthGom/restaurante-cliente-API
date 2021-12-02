@@ -1,6 +1,4 @@
-<video width="320" heigth="240" controls>
-    <source src="..midia/RESTAURANT REST API" type="video/mp4">
-</video>
+<img src="../midia/RESTAURANT REST API" alt="Topo do readme com um fudo preto estilo quadro negro de giz e ilustrações de: pedidos de restaurante, motoboy e um pessoa que trabalha como garçonete/garçom">
 
 #Em construção#
 
