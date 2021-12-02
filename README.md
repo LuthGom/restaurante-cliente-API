@@ -1,4 +1,4 @@
-<img src="../midia/RESTAURANT REST API.gif" alt="Topo do readme com um fudo preto estilo quadro negro de giz e ilustrações de: pedidos de restaurante, motoboy e um pessoa que trabalha como garçonete/garçom">
+<img src="./midia/RESTAURANT REST API.gif" alt="Topo do readme com um fudo preto estilo quadro negro de giz e ilustrações de: pedidos de restaurante, motoboy e um pessoa que trabalha como garçonete/garçom">
 
 #Em construção#
 
