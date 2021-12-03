@@ -5,12 +5,10 @@ const bd = require('./infra/sqlite-db')
 // Importando os controllers
 const cliente = require('./controllers/clientes-controllers')
 
-// importando o banco de dados
 
-// The middlewares
 app.use(express.json())
 app.use((req, res, next) => {
-    console.log('eu fiz isso aqui funcionar, biotch 1');
+    
 
     next()
 })

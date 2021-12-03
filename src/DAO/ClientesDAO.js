@@ -33,7 +33,6 @@ class ClientesDAO {
                 } else {
                     resolve({
                         "clientes": rows,
-                        // "count": rows.length,
                         "error": false
                     })
                 }
