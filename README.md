@@ -6,11 +6,11 @@
 <p>A presente aplicação é uma funcionalidade back-end que gera e administra, de forma mais fácil, o cadastro de clientes com foco em entrega de produtos de resturante(delivery), entretanto, a aplicação foi criada de forma de possa ser utilizada, e adaptada, para cadastro de clientes de qualquer serviço oferecido. Para o programa, o banco de dados relacionais SQLite foi usado, assim como os verbos HTTP e o padrão REST, além da arquitetura MVC, de forma a estruturar coerentemente as operações do método CRUD. 
 
 Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de Dev. Web FullStack da <a href="https://www.resilia.com.br">Resilia Educação.</a></p>
-]
+
 
 ## Status do Projeto
 
-![Bagde](https://img.shields.io/badge/Status%20do%20Projeo-Concluído-green)
+![Bagde](https://img.shields.io/badge/Status%20do%20Projeo-Concluído-red)
 
 ## Ferramentas necessárias:
 
