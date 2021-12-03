@@ -1,4 +1,6 @@
-<img src="./midia/RESTAURANT REST API.gif" alt="Imagem de extensão GIF com o nome do projeto em fundo ilustrativo de quadro de giz e ilustrações de pedidos, motoboy e garçom/garçonete." width = 250px>
+<p align="center">
+<img src="./midia/RESTAURANT REST API.gif" alt="Imagem de extensão GIF com o nome do projeto em fundo ilustrativo de quadro de giz e ilustrações de pedidos, motoboy e garçom/garçonete." width = 360px>
+</p>
 
 #Em construção#
 
