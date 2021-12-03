@@ -53,8 +53,6 @@ e rode o seguinte comando no terminal:</li>
 
  <li>Caso você por algum motivo venha a excluir o arquivo "database.db", que é o nosso banco de dados gerado com a ferramenta SQLite, rode o comando abaixo a fim de gerar outro banco de dados:</li>
  <li>$ node ./src/infr/create-db.js</li>
-
- <li></li>
  </ol>
 </p>
 
@@ -74,7 +72,7 @@ e rode o seguinte comando no terminal:</li>
 
 <p>
 
-{
+```{
    
     "cpf": "string",
     "nome": "string",
@@ -86,7 +84,7 @@ e rode o seguinte comando no terminal:</li>
     "email": "string",
     "senha": "string"
 
-}
+}```
 # Para <strong>Corrigir</strong> um ou mais dados de um ciente cadastrado:
 
 <p>Operar o método HTTP Patch no caminho da "url da API" + "/clientes/id" contendo no corpo da requisição <strong>meramente</strong>
