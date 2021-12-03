@@ -34,11 +34,11 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 <li>Após a instalação das ferramentas, acesse o local em sua máquina onde deseja clonar o repositório, abra o terminal "Git Bash"
 e rode o seguinte comando:</li>
 <li> $ git clone https://github.com/LuthGom/restaurante-cliente-API.git </li>
-<li>Com o repositório aberto, instale as dependências necessárias com o seguinte comando:</li>
+<li>Com o terminal aberto no repositório, instale as dependências necessárias com o seguinte comando:</li>
 <li> $ npm install </li>
 <li>Para iniciar a aplicação basta rodar o comando abaixo via terminal:</li>
 <li> $ npm run dev</li>
-<li> O servidor iniciará na porta:3000 - acesse: http://localhost:3000/ </li>
+<li> O servidor iniciará na porta:3000 - acesse: http://localhost:3000/clientes </li>
 </ul>
 </p>
 
