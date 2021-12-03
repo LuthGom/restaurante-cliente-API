@@ -1,16 +1,5 @@
 class novoCliente {
-    constructor(cpf, nome, telefone, cep, endereco, cidade, uf, email, senha) {
-
-        this.cpf = novoCliente.autenticacaoCPF(cpf)
-        this.nome = novoCliente.autenticacaoNome(nome)
-        this.telefone = novoCliente.autenticacaoTelefone(telefone)
-        this.cep = cep
-        this.endereco = endereco
-        this.cidade = cidade
-        this.uf = uf
-        this.email = novoCliente.autenticacaoEmail(email)
-        this.senha = novoCliente.autenticacaoSenha(senha)
-    }
+   
     static autenticacaoCPF(cpf) {
         cpf = cpf.replace(/\D/g, '')
         let splitCPF = cpf.toString().split('')
@@ -119,6 +108,18 @@ class novoCliente {
             }
             return senha
         }
+    }
+    constructor(cpf, nome, telefone, cep, endereco, cidade, uf, email, senha) {
+
+        this.cpf = novoCliente.autenticacaoCPF(cpf)
+        this.nome = novoCliente.autenticacaoNome(nome)
+        this.telefone = novoCliente.autenticacaoTelefone(telefone)
+        this.cep = cep
+        this.endereco = endereco
+        this.cidade = cidade
+        this.uf = uf
+        this.email = novoCliente.autenticacaoEmail(email)
+        this.senha = novoCliente.autenticacaoSenha(senha)
     }
 }
 
