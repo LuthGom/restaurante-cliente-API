@@ -38,7 +38,7 @@ e rode o seguinte comando:</li>
 <li> $ npm install </li>
 <li>Para iniciar a aplicação basta rodar o comando abaixo via terminal:</li>
 <li> $ npm run dev</li>
-<li> O servidor iniciará na porta:3000 </li>
+<li> O servidor iniciará na porta:3000 - acesse: http://localhost:3000/ </li>
 </ul>
 </p>
 
