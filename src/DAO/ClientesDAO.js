@@ -58,13 +58,14 @@ class ClientesDAO {
             })
         })
     }
-    async deletaCliente(id) {
+    deletaCliente(id) {
         return new Promise((resolve, reject) => {
             const deletar = `DELETE FROM CLIENTES WHERE ID = ?`
-            this.db.run(deletar, id, (erro) => {
-                if (erro) {
+            this.db.run(deletar, id, (error) => {
+                if (error) {
                     reject({
-                        "mensagem": erro.message
+                        "mensagem": error.message,
+                        "error": true
                     })
                 } else {
                     resolve({
