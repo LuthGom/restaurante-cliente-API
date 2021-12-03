@@ -100,7 +100,7 @@ os dadados a serem alterados. Exemplo: supondo que apenas o campo senha será al
 
 ## Autor 🌈
 
-<img src="./midia/luth.jpeg" alt="Foto do autor, Luciano Mendes pardo, de cabelos chacheados e está de olhos fechados enconstado numa porta. Luciano está utilizando uma regata de crochê, baseada em granny squares, nas cores pretas, verde, roxo, azul, laranja, cinza e amarelo" width = 320px>
+<img src="./midia/luth.jpeg" alt="Foto do autor, Luciano Mendes pardo, de cabelos chacheados e está de olhos fechados enconstado numa porta. Luciano está utilizando uma regata de crochê, baseada em granny squares, nas cores pretas, verde, roxo, azul, laranja, cinza e amarelo" width = 260px>
 <a href="https://www.linkedin.com/in/dev-luciano-mendes/">Luciano Mendes(Luth🌈) | Clique aqui para o meu Linkedin<a/>
 <p>Um ex quase professor de Química!
 Depois de 3 anos cursando a Licenciatura, abandonou a graduaçao antes que entrasse em moldes sociais rígidos
