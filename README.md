@@ -42,7 +42,7 @@ e rode o seguinte comando no terminal:</li>
 <li>Para instalar as dependências de desenvolvimento, rode o comando abaixo no terminal:</li>
 <li> npm install nodemon --save-dev</li>
 <li>Para iniciar a aplicação basta rodar o comando abaixo via terminal:</li>
-<li> $ npm start</li>
+<li> npm start</li>
 <li> O servidor iniciará na porta:3000 - acesse: http://localhost:3000/clientes</li>
 
 
@@ -100,6 +100,7 @@ os dados a serem alterados. Exemplo: supondo que apenas o campo senha será alte
 
 <p>Operar o método HTTP Delete no caminho da "url da API" + "/clientes/id" </p>
 
+
 ## Autor 🌈
 
 
@@ -107,4 +108,4 @@ os dados a serem alterados. Exemplo: supondo que apenas o campo senha será alte
 <a href="https://www.linkedin.com/in/dev-luciano-mendes/">Luciano Mendes(Luth🌈) | Clique aqui para o meu Linkedin<a/>
 <p>Um ex quase professor de Química!
 Depois de 3 anos cursando a Licenciatura, abandonou a graduaçao antes que entrasse em moldes sociais rígidos
-e perdesse o viés educacional nato presente em si!</p>
+e perdesse o viés educacional presente em si!</p>
