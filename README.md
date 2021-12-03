@@ -6,11 +6,11 @@
 <p>A presente aplicação é uma funcionalidade back-end que gera e administra, de forma mais fácil, o cadastro de clientes com foco em entrega de produtos de resturante(delivery), entretanto, a aplicação foi criada de forma de possa ser utilizada, e adaptada, para cadastro de clientes de qualquer serviço oferecido. Para o programa, o banco de dados relacionais SQLite foi usado, assim como os verbos HTTP e o padrão REST, além da arquitetura MVC, de forma a estruturar coerentemente as operações do método CRUD. 
 
 Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de Dev. Web FullStack da <a href="https://www.resilia.com.br">Resilia Educação.</a></p>
-]
+
 
 ## Status do Projeto
 
-![Bagde](https://img.shields.io/badge/Status%20do%20Projeo-Concluído-green)
+![Bagde](https://img.shields.io/badge/Status%20do%20Projeo-Concluído-red)
 
 ## Ferramentas necessárias:
 
@@ -43,9 +43,8 @@ e rode o seguinte comando no terminal:</li>
 <li> npm install nodemon --save-dev</li>
 <li>Para iniciar a aplicação basta rodar o comando abaixo via terminal:</li>
 <li> $ npm start</li>
-<li> O servidor iniciará na porta:3000 </li>
-</ul>
-</p>
+<li> O servidor iniciará na porta:3000 - acesse: http://localhost:3000/clientes</li>
+
 
 ## Atenção:
 <p>
@@ -91,7 +90,7 @@ e rode o seguinte comando no terminal:</li>
 # Para <strong>Corrigir</strong> um ou mais dados de um ciente cadastrado:
 
 <p>Operar o método HTTP Patch no caminho da "url da API" + "/clientes/id" contendo no corpo da requisição <strong>meramente</strong>
-os dadados a serem alterados. Exemplo: supondo que apenas o campo senha será alterado:</p>
+os dados a serem alterados. Exemplo: supondo que apenas o campo senha será alterado:</p>
 
 <p>
     "senha": "string"
@@ -105,7 +104,9 @@ os dadados a serem alterados. Exemplo: supondo que apenas o campo senha será al
 
 ## Autor 🌈
 
-<img src="./midia/luth.jpeg" alt="Foto do autor, Luciano Mendes pardo, de cabelos chacheados e está de olhos fechados enconstado numa porta. Luciano está utilizando uma regata de crochê, baseada em granny squares, nas cores pretas, verde, roxo, azul, laranja, cinza e amarelo"> <a href="https://www.linkedin.com/in/dev-luciano-mendes/" width=360px>Luciano Mendes(Luth🌈) | Clique aqui para o meu Linkedin<a/>
+
+<img src="./midia/luth.jpeg" alt="Foto do autor, Luciano Mendes pardo, de cabelos chacheados e está de olhos fechados enconstado numa porta. Luciano está utilizando uma regata de crochê, baseada em granny squares, nas cores pretas, verde, roxo, azul, laranja, cinza e amarelo" width = 200px heigth= 200px>
+<a href="https://www.linkedin.com/in/dev-luciano-mendes/">Luciano Mendes(Luth🌈) | Clique aqui para o meu Linkedin<a/>
 <p>Um ex quase professor de Química!
 Depois de 3 anos cursando a Licenciatura, abandonou a graduaçao antes que entrasse em moldes sociais rígidos
 e perdesse o viés educacional nato presente em si!</p>
