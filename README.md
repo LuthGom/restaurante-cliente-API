@@ -18,9 +18,12 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 <strong>Observação</strong> é recomendável a utilização de um editor de código que tenha familiaridade, caso não tenha com nenhum, recomenda-se o <a href="https://code.visualstudio.com/download">VsCode</a> pela intuitividade do mecanismo.
 
 # Dependências:
+
 ![Badge](https://img.shields.io/badge/"express"-"%5E4.17.1"-red)
-![Badge](https://img.shields.io/badge/"nodemon"-"%5E2.0.15"-red)
 ![Badge](https://img.shields.io/badge/"sqlite3"-"%5E5.0.2"-red)
+
+# Dependências de desenvolvimento:
+![Badge](https://img.shields.io/badge/"nodemon"-"%5E2.0.15"-red)
 
 
 </p>
@@ -32,12 +35,14 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 
 <ul> 
 <li>Após a instalação das ferramentas, acesse o local em sua máquina onde deseja clonar o repositório, abra o terminal "Git Bash"
-e rode o seguinte comando:</li>
-<li> $ git clone https://github.com/LuthGom/restaurante-cliente-API.git </li>
-<li>Com o repositório aberto, instale as dependências necessárias com o seguinte comando:</li>
-<li> $ npm install </li>
+e rode o seguinte comando no terminal:</li>
+<li> git clone https://github.com/LuthGom/restaurante-cliente-API.git </li>
+<li>Com o repositório aberto, instale as dependências necessárias com o seguinte comando no terminal:</li>
+<li> npm install </li>
+<li>Para instalar as dependências de desenvolvimento, rode o comando abaixo no terminal:</li>
+<li> npm install nodemon --save-dev</li>
 <li>Para iniciar a aplicação basta rodar o comando abaixo via terminal:</li>
-<li> $ npm run dev</li>
+<li> $ npm start</li>
 <li> O servidor iniciará na porta:3000 </li>
 </ul>
 </p>

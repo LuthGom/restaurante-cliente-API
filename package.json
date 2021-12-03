@@ -20,10 +20,12 @@
   "homepage": "https://github.com/LuthGom/restaurante-cliente-API#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "nodemon": "^2.0.15",
     "sqlite3": "^5.0.2"
   },
   "engines": {
     "node": "16.*"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
