@@ -72,7 +72,7 @@ e rode o seguinte comando no terminal:</li>
 
 <p>
 
-```{
+``` json {
    
     "cpf": "string",
     "nome": "string",
