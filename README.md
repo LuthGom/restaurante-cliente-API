@@ -72,7 +72,8 @@ e rode o seguinte comando no terminal:</li>
 
 <p>
 
-```json {
+```json 
+ {
    
     "cpf": "string",
     "nome": "string",
@@ -84,7 +85,8 @@ e rode o seguinte comando no terminal:</li>
     "email": "string",
     "senha": "string"
 
-}```
+}
+```
  </p>
 # Para <strong>Corrigir</strong> um ou mais dados de um ciente cadastrado:
 
