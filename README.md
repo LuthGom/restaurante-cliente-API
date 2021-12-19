@@ -10,7 +10,7 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 
 ## Status do Projeto
 
-![Bagde](https://img.shields.io/badge/Status%20do%20Projeo-Concluído-red)
+![Bagde](https://img.shields.io/badge/Status%20do%20Projeto-Concluído-red)
 
 ## Ferramentas necessárias:
 
