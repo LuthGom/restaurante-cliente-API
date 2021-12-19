@@ -110,5 +110,5 @@ os dados a serem alterados. Exemplo: supondo que apenas o campo senha será alte
 
 <a href="https://www.linkedin.com/in/dev-luciano-mendes/">Luciano Mendes(Luth🌈) | Clique aqui para o meu Linkedin<a/>
 <p>Um ex quase professor de Química!
-Depois de 3 anos cursando a Licenciatura, abandonou a graduaçao antes que entrasse em moldes sociais rígidos
-e perdesse o viés educacional presente em si!</p>
+Depois de 3 anos cursando a Licenciatura, abandonei a graduaçao antes que entrasse em moldes sociais rígidos
+e perdesse o viés educacional presente em mim!</p>
