@@ -77,7 +77,7 @@ e rode o seguinte comando no terminal:</li>
    
     "cpf": "string",
     "nome": "string",
-    "nome": int,
+    "numero": int,
     "cep": int,
     "endereco": "string",
     "cidade": "string",
