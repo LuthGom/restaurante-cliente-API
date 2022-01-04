@@ -74,6 +74,7 @@ e rode o seguinte comando no terminal:</li>
 
 <p>
 
+```json
 {
    
     "cpf": "string",
@@ -87,6 +88,9 @@ e rode o seguinte comando no terminal:</li>
     "senha": "string"
 
 }
+```
+
+</p>
 # Para <strong>Corrigir</strong> um ou mais dados de um ciente cadastrado:
 
 <p>Operar o método HTTP Patch no caminho da "url da API" + "/clientes/id" contendo no corpo da requisição <strong>meramente</strong>
