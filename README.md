@@ -21,6 +21,7 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 
 ![Badge](https://img.shields.io/badge/"express"-"%5E4.17.1"-red)
 ![Badge](https://img.shields.io/badge/"sqlite3"-"%5E5.0.2"-red)
+![Badge](https://img.shields.io/badge/"cors"-"%5E2.8.5"-red)
 
 # Dependências de desenvolvimento:
 ![Badge](https://img.shields.io/badge/"nodemon"-"%5E2.0.15"-red)
