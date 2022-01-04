@@ -10,7 +10,7 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 
 ## Status do Projeto
 
-![Bagde](https://img.shields.io/badge/Status%20do%20Projeo-Concluído-red)
+![Bagde](https://img.shields.io/badge/Status%20do%20Projeto-Concluído-red)
 
 ## Ferramentas necessárias:
 
@@ -42,7 +42,7 @@ e rode o seguinte comando no terminal:</li>
 <li>Para instalar as dependências de desenvolvimento, rode o comando abaixo no terminal:</li>
 <li> npm install nodemon --save-dev</li>
 <li>Para iniciar a aplicação basta rodar o comando abaixo via terminal:</li>
-<li> $ npm start</li>
+<li> npm start</li>
 <li> O servidor iniciará na porta:3000 - acesse: http://localhost:3000/clientes</li>
 
 
@@ -53,8 +53,6 @@ e rode o seguinte comando no terminal:</li>
 
  <li>Caso você por algum motivo venha a excluir o arquivo "database.db", que é o nosso banco de dados gerado com a ferramenta SQLite, rode o comando abaixo a fim de gerar outro banco de dados:</li>
  <li>$ node ./src/infr/create-db.js</li>
-
- <li></li>
  </ol>
 </p>
 
@@ -74,12 +72,17 @@ e rode o seguinte comando no terminal:</li>
 
 <p>
 
+<<<<<<< HEAD
 ```json
 {
+=======
+```json 
+ {
+>>>>>>> f5aa1d0078e148e4bce481a084224901037cf230
    
     "cpf": "string",
     "nome": "string",
-    "nome": int,
+    "numero": int,
     "cep": int,
     "endereco": "string",
     "cidade": "string",
@@ -89,8 +92,12 @@ e rode o seguinte comando no terminal:</li>
 
 }
 ```
+<<<<<<< HEAD
 
 </p>
+=======
+ </p>
+>>>>>>> f5aa1d0078e148e4bce481a084224901037cf230
 # Para <strong>Corrigir</strong> um ou mais dados de um ciente cadastrado:
 
 <p>Operar o método HTTP Patch no caminho da "url da API" + "/clientes/id" contendo no corpo da requisição <strong>meramente</strong>
@@ -106,11 +113,12 @@ os dados a serem alterados. Exemplo: supondo que apenas o campo senha será alte
 
 <p>Operar o método HTTP Delete no caminho da "url da API" + "/clientes/id" </p>
 
+
 ## Autor 🌈
 
-
 <img src="./midia/luth.jpeg" alt="Foto do autor, Luciano Mendes pardo, de cabelos chacheados e está de olhos fechados enconstado numa porta. Luciano está utilizando uma regata de crochê, baseada em granny squares, nas cores pretas, verde, roxo, azul, laranja, cinza e amarelo" width = 200px heigth= 200px>
+
 <a href="https://www.linkedin.com/in/dev-luciano-mendes/">Luciano Mendes(Luth🌈) | Clique aqui para o meu Linkedin<a/>
 <p>Um ex quase professor de Química!
-Depois de 3 anos cursando a Licenciatura, abandonou a graduaçao antes que entrasse em moldes sociais rígidos
-e perdesse o viés educacional nato presente em si!</p>
+Depois de 3 anos cursando a Licenciatura, abandonei a graduaçao antes que entrasse em moldes sociais rígidos
+e perdesse o viés educacional presente em mim!</p>
