@@ -65,6 +65,7 @@ const clientes = (app, bd) => {
       res.status(200).json({
         error: false,
         cliente: {
+          id: login.requisicao.ID,
           cpf: login.requisicao.CPF,
           nome: login.requisicao.NOME,
           telefone: login.requisicao.TELEFONE,
@@ -84,15 +85,15 @@ const clientes = (app, bd) => {
     }
   });
 
-  app.patch("/clientes/:id", async (req, res) => {
+  app.patch("/clientes/:email", async (req, res) => {
     try {
-      const id = req.params.id;
+      const email = req.params.email;
       const body = req.body;
       const respostaGet = await novoClienteDAO.retornaClientesDesejados(
-        id,
+        email,
         body
       );
-      const clienteAntigo = respostaGet.requisicao[0];
+      const clienteAntigo = respostaGet.requisicao["email"];
 
       if (clienteAntigo) {
         const clienteAtualizado = [
@@ -107,13 +108,13 @@ const clientes = (app, bd) => {
           body.senha || clienteAntigo.SENHA,
         ];
         const resposta = await novoClienteDAO.atualizaCliente(
-          id,
+          email,
           clienteAtualizado
         );
         res.status(200).json(resposta);
       } else {
         res.json({
-          mensagem: `Cliente com id "${id} não encontrado`,
+          mensagem: `Cliente com id ${email} não encontrado`,
           error: true,
         });
       }
@@ -125,10 +126,10 @@ const clientes = (app, bd) => {
     }
   });
 
-  app.delete("/clientes/:id", async (req, res) => {
+  app.delete("/clientes/:cpf", async (req, res) => {
     try {
-      const id = req.params.id;
-      const resposta = await novoClienteDAO.deletaCliente(id);
+      const cpf = req.params.cpf;
+      const resposta = await novoClienteDAO.deletaCliente(cpf);
       res.status(200).json(resposta);
     } catch (error) {
       res.status(404).json({

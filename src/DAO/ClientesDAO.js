@@ -58,10 +58,10 @@ class ClientesDAO {
             })
         })
     }
-    deletaCliente(id) {
+    deletaCliente(cpf) {
         return new Promise((resolve, reject) => {
-            const deletar = `DELETE FROM CLIENTES WHERE ID = ?`
-            this.db.run(deletar, id, (error) => {
+            const deletar = `DELETE FROM CLIENTES WHERE CPF = ?`
+            this.db.run(deletar, cpf, (error) => {
                 if (error) {
                     reject({
                         "mensagem": error.message,
@@ -69,7 +69,7 @@ class ClientesDAO {
                     })
                 } else {
                     resolve({
-                        "mensagem": `Cliente de id ${id} excluído com sucesso!`,
+                        "mensagem": `Cliente de CPF ${cpf} excluído com sucesso!`,
                         "erro": false
                     })
                 }
@@ -94,21 +94,21 @@ class ClientesDAO {
             })
         })
       }
-    atualizaCliente(id, cliente) {
+    atualizaCliente(email, cliente) {
 
         return new Promise((resolve, reject) => {
             const UPDATE = `
                 UPDATE CLIENTES
-                SET CPF = ?, NOME = ?, TELEFONE = ?, CEP = ?, ENDERECO = ?, CIDADE = ?, UF = ?, EMAIL = ?, SENHA = ? WHERE ID = ?`
-                const array = [...cliente, id]
-            this.db.run(UPDATE,
+                SET CPF = ?, NOME = ?, TELEFONE = ?, CEP = ?, ENDERECO = ?, CIDADE = ?, UF = ?, EMAIL = ?, SENHA = ? WHERE EMAIL = ?`
+                const array = [...cliente, email]
+            this.db.get(UPDATE,
                 array,
                 (error) => {
                     if (error) {
                         reject(error)
                     } else {
                         resolve({
-                            "mensagem": `Cliente de id ${id} atualizado com sucesso.`,
+                            "mensagem": `Cliente de email ${email} atualizado com sucesso.`,
                             "cliente": cliente,
                             "erro": false
                         })
