@@ -1,57 +1,92 @@
-const Cliente = require('../models/Clientes')
-const ClientesDAO = require('../DAO/ClientesDAO')
+const Cliente = require("../models/Clientes");
+const ClientesDAO = require("../DAO/ClientesDAO");
 const clientes = (app, bd) => {
-  const novoClienteDAO = new ClientesDAO(bd)
-  app.post('/clientes', async (req, res) => {
-
+  const novoClienteDAO = new ClientesDAO(bd);
+  app.post("/clientes", async (req, res) => {
     try {
-      const body = req.body
-      const novoCliente = new Cliente(body.cpf, body.nome, body.telefone, body.cep, body.endereco, body.cidade, body.uf, body.email, body.senha)
-      const resposta = await novoClienteDAO.insereCliente(novoCliente)
-      res.status(200).json(resposta)
+      const body = req.body;
+      const novoCliente = new Cliente(
+        body.cpf,
+        body.nome,
+        body.telefone,
+        body.cep,
+        body.endereco,
+        body.cidade,
+        body.uf,
+        body.email,
+        body.senha
+      );
+      const resposta = await novoClienteDAO.insereCliente(novoCliente);
+      res.status(200).json(resposta);
     } catch (error) {
       res.status(400).json({
-        "message": error.message,
-        "error": true
-      })
+        message: error.message,
+        error: true,
+      });
     }
-  })
-  app.get('/clientes', async (req, res) => {
+  });
+  app.get("/clientes", async (req, res) => {
     try {
-      const resposta = await novoClienteDAO.pegaTodosClientes()
+      const resposta = await novoClienteDAO.pegaTodosClientes();
 
-      res.status(200).json(resposta)
-    } catch (error){
+      res.status(200).json(resposta);
+    } catch (error) {
       res.status(400).json({
-        "message": error.message,
-        "error": true
-      })
+        message: error.message,
+        error: true,
+      });
     }
-  })
+  });
 
-  app.get('/clientes/:id', async (req, res) => {
-    const id = req.params.id
+  app.get("/clientes/:id", async (req, res) => {
+    const id = req.params.id;
     try {
-      const resposta = await novoClienteDAO.retornaClientesDesejados(id)
-      res.status(200).json(resposta)
-    } catch (error){
+      const resposta = await novoClienteDAO.retornaClientesDesejados(id);
+      res.status(200).json(resposta);
+    } catch (error) {
       res.status(400).json({
-        "message": error.message,
-        "error": true
-      })
-
+        message: error.message,
+        error: true,
+      });
     }
+  });
 
-  })
-
-  app.patch('/clientes/:id', async(req, res) => {
-    
+  app.post("/clientes/login", async (req, res) => {
     try {
-      const id = req.params.id
-      const body = req.body
-      const respostaGet = await novoClienteDAO.retornaClientesDesejados(id,body)
-      const clienteAntigo = respostaGet.requisicao[0]
+      const { email, senha } = req.body;
+      const login = await novoClienteDAO.buscaPorEmail(email);
+      console.log(login);
+      if (!login.requisicao || login.requisicao.SENHA !== senha) {
+        return res.status(400).json({
+          message: "Email ou senha inválidas!",
+          error: true,
+        });
+      }
+      res.status(200).json({
+        error: false,
+        cliente: {
+          nome: login.requisicao.NOME,
+          telefone: login.requisicao.TELEFONE,
+          endereco: { endereco: login.requisicao.ENDERECO, cidade: login.requisicao.CIDADE },
+        },
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+        error: true,
+      });
+    }
+  });
 
+  app.patch("/clientes/:id", async (req, res) => {
+    try {
+      const id = req.params.id;
+      const body = req.body;
+      const respostaGet = await novoClienteDAO.retornaClientesDesejados(
+        id,
+        body
+      );
+      const clienteAntigo = respostaGet.requisicao[0];
 
       if (clienteAntigo) {
         const clienteAtualizado = [
@@ -63,37 +98,38 @@ const clientes = (app, bd) => {
           body.cidade || clienteAntigo.CIDADE,
           body.uf || clienteAntigo.UF,
           body.email || clienteAntigo.EMAIL,
-          body.senha || clienteAntigo.SENHA
-        ]
-        const resposta = await novoClienteDAO.atualizaCliente(id, clienteAtualizado)
-        res.status(200).json(resposta)
+          body.senha || clienteAntigo.SENHA,
+        ];
+        const resposta = await novoClienteDAO.atualizaCliente(
+          id,
+          clienteAtualizado
+        );
+        res.status(200).json(resposta);
       } else {
         res.json({
-          "mensagem": `Cliente com id "${id} não encontrado`,
-          "error": true
-        })
+          mensagem: `Cliente com id "${id} não encontrado`,
+          error: true,
+        });
       }
     } catch (error) {
       res.json({
-        "mensagem": error.message,
-        "error": true
-      })
+        mensagem: error.message,
+        error: true,
+      });
     }
-  })
+  });
 
-  app.delete('/clientes/:id', async (req, res) => {
+  app.delete("/clientes/:id", async (req, res) => {
     try {
-      const id = req.params.id
-      const resposta = await novoClienteDAO.deletaCliente(id)
-      res.status(200).json(resposta)
+      const id = req.params.id;
+      const resposta = await novoClienteDAO.deletaCliente(id);
+      res.status(200).json(resposta);
     } catch (error) {
       res.status(404).json({
-
-        "mensagem": error.message,
-        "erro": true
-      })
+        mensagem: error.message,
+        erro: true,
+      });
     }
-  })
-
-}
-module.exports = clientes
+  });
+};
+module.exports = clientes;
