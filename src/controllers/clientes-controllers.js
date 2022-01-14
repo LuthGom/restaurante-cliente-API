@@ -74,7 +74,7 @@ const clientes = (app, bd) => {
           cidade: login.requisicao.CIDADE,
           uf: login.requisicao.UF,
           email: login.requisicao.EMAIL,
-          senha: login.requisicao.SENHA
+          senha: login.requisicao.SENHA,
         },
       });
     } catch (error) {
@@ -85,15 +85,14 @@ const clientes = (app, bd) => {
     }
   });
 
-  app.patch("/clientes/:email", async (req, res) => {
+  app.patch("/clientes/:cpf", async (req, res) => {
     try {
-      const email = req.params.email;
+      const cpf = req.params.cpf;
       const body = req.body;
-      const respostaGet = await novoClienteDAO.retornaClientesDesejados(
-        email,
-        body
-      );
-      const clienteAntigo = respostaGet.requisicao["email"];
+      console.log(body);
+      const respostaGet = await novoClienteDAO.buscaPorCpf(cpf);
+      console.log(respostaGet);
+      const clienteAntigo = respostaGet.requisicao;
 
       if (clienteAntigo) {
         const clienteAtualizado = [
@@ -108,13 +107,13 @@ const clientes = (app, bd) => {
           body.senha || clienteAntigo.SENHA,
         ];
         const resposta = await novoClienteDAO.atualizaCliente(
-          email,
+          cpf,
           clienteAtualizado
         );
         res.status(200).json(resposta);
       } else {
         res.json({
-          mensagem: `Cliente com id ${email} não encontrado`,
+          mensagem: `Cliente com cpf ${cpf} não encontrado`,
           error: true,
         });
       }

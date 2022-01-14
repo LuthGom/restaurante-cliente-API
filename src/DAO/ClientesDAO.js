@@ -94,21 +94,39 @@ class ClientesDAO {
             })
         })
       }
-    atualizaCliente(email, cliente) {
+      buscaPorCpf (cpf)  {
+        const SELECT_BY_EMAIL = `SELECT * FROM CLIENTES WHERE CPF = ?`
+        return new Promise((resolve, reject) => {
+            this.db.get(SELECT_BY_EMAIL, cpf, (error, row) => {
+                if (error) {
+                    reject({
+                        "mensagem": error.message,
+                        "erro": true
+                    })
+                } else {
+                    resolve({
+                        "requisicao": row,
+                        "erro": false
+                    })
+                }
+            })
+        })
+      }
+    atualizaCliente(cpf, cliente) {
 
         return new Promise((resolve, reject) => {
             const UPDATE = `
                 UPDATE CLIENTES
-                SET CPF = ?, NOME = ?, TELEFONE = ?, CEP = ?, ENDERECO = ?, CIDADE = ?, UF = ?, EMAIL = ?, SENHA = ? WHERE EMAIL = ?`
-                const array = [...cliente, email]
-            this.db.get(UPDATE,
+                SET CPF = ?, NOME = ?, TELEFONE = ?, CEP = ?, ENDERECO = ?, CIDADE = ?, UF = ?, EMAIL = ?, SENHA = ? WHERE CPF = ?`
+                const array = [...cliente, cpf]
+            this.db.run(UPDATE,
                 array,
                 (error) => {
                     if (error) {
                         reject(error)
                     } else {
                         resolve({
-                            "mensagem": `Cliente de email ${email} atualizado com sucesso.`,
+                            "mensagem": `Cliente de cpf ${cpf} atualizado com sucesso.`,
                             "cliente": cliente,
                             "erro": false
                         })
