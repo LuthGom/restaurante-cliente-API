@@ -65,9 +65,15 @@ const clientes = (app, bd) => {
       res.status(200).json({
         error: false,
         cliente: {
+          cpf: login.requisicao.CPF,
           nome: login.requisicao.NOME,
           telefone: login.requisicao.TELEFONE,
-          endereco: { endereco: login.requisicao.ENDERECO, cidade: login.requisicao.CIDADE },
+          cep: login.requisicao.CEP,
+          endereco: login.requisicao.ENDERECO,
+          cidade: login.requisicao.CIDADE,
+          uf: login.requisicao.UF,
+          email: login.requisicao.EMAIL,
+          senha: login.requisicao.SENHA
         },
       });
     } catch (error) {
