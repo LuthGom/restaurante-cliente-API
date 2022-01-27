@@ -73,13 +73,13 @@ e rode o seguinte comando no terminal:</li>
 
 <p>
 
-<<<<<<< HEAD
+
 ```json
 {
 =======
 ```json 
  {
->>>>>>> f5aa1d0078e148e4bce481a084224901037cf230
+
    
     "cpf": "string",
     "nome": "string",
@@ -93,7 +93,7 @@ e rode o seguinte comando no terminal:</li>
 
 }
 ```
-<<<<<<< HEAD
+
 
 </p>
 =======
