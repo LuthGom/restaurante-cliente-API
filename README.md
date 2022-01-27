@@ -74,9 +74,7 @@ e rode o seguinte comando no terminal:</li>
 <p>
 
 
-```json
-{
-=======
+
 ```json 
  {
 
@@ -96,7 +94,7 @@ e rode o seguinte comando no terminal:</li>
 
 
 </p>
-=======
+
  </p>
 >>>>>>> f5aa1d0078e148e4bce481a084224901037cf230
 # Para <strong>Corrigir</strong> um ou mais dados de um ciente cadastrado:
