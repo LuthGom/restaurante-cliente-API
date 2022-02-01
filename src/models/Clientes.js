@@ -2,7 +2,7 @@ class novoCliente {
    
     static autenticacaoCPF(cpf) {
         cpf = cpf.replace(/\D/g, '')
-        let splitCPF = cpf.toString().split('')
+        let splitCPF = cpf.split('')
         if (splitCPF.length < 11) {
             throw new Error("Cpf inválido!")
         } else {
