@@ -96,7 +96,7 @@ e rode o seguinte comando no terminal:</li>
 </p>
 
  </p>
->>>>>>> f5aa1d0078e148e4bce481a084224901037cf230
+
 # Para <strong>Corrigir</strong> um ou mais dados de um ciente cadastrado:
 
 <p>Operar o método HTTP Patch no caminho da "url da API" + "/clientes/id" contendo no corpo da requisição <strong>meramente</strong>
