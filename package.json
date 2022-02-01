@@ -4,7 +4,7 @@
   "description": "Trabalho final do módulo 4 de Dev. Web FullStack da Resilia Educação",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node src/app.js",
     "dev": "nodemon src/app.js"
   },
@@ -27,6 +27,8 @@
     "node": "16.*"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
   }
 }
