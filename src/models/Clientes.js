@@ -36,9 +36,9 @@ class NovoCliente {
     static async buscaPorEmail(email) {
         const cliente = await ClientesDAO.buscaPorEmail(email)
         if (!cliente) {
-            throw new Error("Cliente não cadastrado!")
+            return null
         }
-        return new NovoCliente(cliente);
+        return cliente;
     }
     static async buscaPorCpf(cpf) {
         const cliente = await ClientesDAO.buscaPorCpf(cpf)
