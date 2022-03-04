@@ -6,7 +6,7 @@ class ClientesController {
     try {
       const { cpf, nome, telefone, cep, endereco, cidade, uf, email, senha } = req.body;
       const novoCliente = new Cliente({ cpf, nome, telefone, cep, endereco, cidade, uf, email, senha });
-     await novoCliente.cadastrarCliente();
+      await novoCliente.cadastrarCliente();
       return res.status(200).json(novoCliente);
     } catch (error) {
       res.status(400).json({
@@ -119,7 +119,10 @@ class ClientesController {
     try {
       const cpf = req.params.cpf;
       const resposta = await Cliente.deletarCliente(cpf);
-      res.status(200).json(resposta);
+      res.status(200).json({
+        resposta: `Cliente de cpf ${cpf} deletado!`,
+        erro: false
+      });
     } catch (error) {
       res.status(404).json({
         mensagem: error.message,
