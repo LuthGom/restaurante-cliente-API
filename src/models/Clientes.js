@@ -55,11 +55,10 @@ class NovoCliente {
         return atualizacaoDeCliente;
     }
     static async deletarCliente(cpf) {
-        const clienteADeletar = await ClientesDAO.deletarCliente(cpf);
         if (await NovoCliente.buscaPorCpf(cpf)) {
-            return clienteADeletar;
+            await ClientesDAO.deletarCliente(cpf);
         }
-        throw new Error(`O cliente de cpf ${cpf} não está cadastrado!`)
+        else { throw new Error(`O cliente de cpf ${cpf} não está cadastrado!`) }
     }
     todasAsValidacoes() {
         this.autenticacaoCPF();
