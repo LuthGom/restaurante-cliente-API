@@ -1,21 +1,34 @@
-// Arquivo responsável por criar e conectar nosso bd
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-const caminhoArq = path.resolve(__dirname,'database.db')
-// Esse comando verifica se existe um bd no caminha especificado
-// Se nao existir ele cria um com o nome dado
-// Por isso a importancia de ser o mesmo caminho que o indicado no arquivo
-// que cria e popula as tabelas
-const bd = new sqlite3.Database(caminhoArq);
+const sqlite3 = require('sqlite3').verbose()
+const path = require('path')
+const caminhoArq = path.resolve(__dirname, 'database.db')
+
+const db = new sqlite3.Database(caminhoArq)
+
+const CLIENTES_SCHEMA = `
+CREATE TABLE IF NOT EXISTS "CLIENTES"(
+    "ID" INTEGER PRIMARY KEY AUTOINCREMENT, 
+    "CPF" VARCHAR(11),
+    "NOME" varchar(64),
+    "TELEFONE" INTEGER,
+    "CEP" INTEGER,
+    "ENDERECO" varchar(64),
+    "CIDADE" varchar(64),
+    "UF" varchar(4),
+    "EMAIL" varchar(64),
+    "SENHA" varchar(64)
+    
+)`;
 
 
-//Processamento de sinal
-// Esse código serve para encerrar nosso bd
-// assim que fecharmos o servidor
-process.on('SIGINT', () =>
-    bd.close(() => {
-        process.exit(0);
-    })
-);
 
-module.exports = bd;
+function criaTableClient() {
+    db.run(CLIENTES_SCHEMA, (error) => {
+        if (error) console.log("Erro ao criar tabela de clientes");
+    });
+}
+
+db.serialize( ()=> {
+    criaTableClient();
+})
+
+module.exports = db;

@@ -1,7 +1,7 @@
 class Validacoes {
     static autenticacaoCPF(cpf) {
-        const replace = cpf.toString().replace(/\D/g, '')
-        console.log('replace', replace);
+        const strg = cpf.toString();
+        const replace = strg.replace(/\D/g, '')
         let splitCPF = replace.split('')
         if (splitCPF.length < 11) {
             throw new Error("Cpf inválido!")
@@ -37,8 +37,7 @@ class Validacoes {
             primeiraAutenticacao === 10 ? 0 : primeiraAutenticacao === 11 ? 0 : primeiraAutenticacao
             segundaAutenticacao === 10 ? 0 : segundaAutenticacao === 11 ? 0 : segundaAutenticacao
             if (primeiraAutenticacao === splitCPF[9] && segundaAutenticacao === splitCPF[10]) {
-                console.log(replace);
-                return replace.toString()
+                return replace
             } else {
                 throw new Error(`Os dígitos retornados são ${primeiraAutenticacao}${segundaAutenticacao}. o CPF é inválido!`);
 

@@ -1,29 +1,24 @@
+const db = require('../infra/sqlite-db')
 class ClientesDAO {
-    constructor(db) {
-        this.db = db
-    }
-    insereCliente(novoCliente) {
+
+    static cadastrarCliente(novoCliente) {
         return new Promise((resolve, reject) => {
-            this.db.run(`INSERT INTO CLIENTES (CPF, NOME, TELEFONE, CEP, ENDERECO, CIDADE, UF, EMAIL, SENHA) VALUES (?,?,?,?,?,?,?,?,?);`,
-                [novoCliente.cpf, novoCliente.nome, novoCliente.telefone, novoCliente.cep, novoCliente.endereco, novoCliente.cidade, novoCliente.uf, novoCliente.email, novoCliente.senha],
-                (error) => {
+            db.all(`INSERT INTO CLIENTES (CPF, NOME, TELEFONE, CEP, ENDERECO, CIDADE, UF, EMAIL, SENHA) VALUES (?,?,?,?,?,?,?,?,?);`,
+                [...Object.values(novoCliente)],
+                (error, rows) => {
                     if (error) {
                         reject({
                             "mensagem": error.message,
                             "erro": true
                         })
-                    } else {
-                        resolve({
-                            "requisicao": novoCliente,
-                            "erro": false
-                        })
                     }
+                    return resolve({ "return": rows });
                 })
         })
     }
-    pegaTodosClientes() {
+    static listarTodosOsClientes() {
         return new Promise((resolve, reject) => {
-            this.db.all('SELECT * FROM CLIENTES;', (error, rows) => {
+            db.all('SELECT * FROM CLIENTES;', (error, rows) => {
 
                 if (error) {
                     reject({
@@ -40,10 +35,10 @@ class ClientesDAO {
         })
     }
 
-    retornaClientesDesejados(id) {
+    static listarClientePorId(id) {
         const SELECT_BY_ID = `SELECT * FROM CLIENTES WHERE ID = ?`
         return new Promise((resolve, reject) => {
-            this.db.all(SELECT_BY_ID, id, (error, rows) => {
+            db.all(SELECT_BY_ID, id, (error, rows) => {
                 if (error) {
                     reject({
                         "mensagem": error.message,
@@ -58,10 +53,10 @@ class ClientesDAO {
             })
         })
     }
-    deletaCliente(cpf) {
+    static deletarCliente(cpf) {
         return new Promise((resolve, reject) => {
             const deletar = `DELETE FROM CLIENTES WHERE CPF = ?`
-            this.db.run(deletar, cpf, (error) => {
+            db.run(deletar, cpf, (error) => {
                 if (error) {
                     reject({
                         "mensagem": error.message,
@@ -76,50 +71,44 @@ class ClientesDAO {
             })
         })
     }
-    buscaPorEmail (email)  {
+    static buscaPorEmail(email) {
         const SELECT_BY_EMAIL = `SELECT * FROM CLIENTES WHERE EMAIL = ?`
         return new Promise((resolve, reject) => {
-            this.db.get(SELECT_BY_EMAIL, email, (error, rows) => {
+            db.get(SELECT_BY_EMAIL, email, (error, rows) => {
                 if (error) {
                     reject({
                         "mensagem": error.message,
                         "erro": true
                     })
                 } else {
-                    resolve({
-                        "requisicao": rows,
-                        "erro": false
-                    })
+                    resolve(rows)
                 }
             })
         })
-      }
-      buscaPorCpf (cpf)  {
+    }
+    static buscaPorCpf(cpf) {
         const SELECT_BY_EMAIL = `SELECT * FROM CLIENTES WHERE CPF = ?`
         return new Promise((resolve, reject) => {
-            this.db.get(SELECT_BY_EMAIL, cpf, (error, row) => {
+            db.get(SELECT_BY_EMAIL, cpf, (error, rows) => {
                 if (error) {
                     reject({
                         "mensagem": error.message,
                         "erro": true
                     })
-                } else {
-                    resolve({
-                        "requisicao": row,
-                        "erro": false
-                    })
-                }
+                } 
+                resolve(rows)
+
             })
         })
-      }
-    atualizaCliente(cpf, cliente) {
+    }
+    static atualizarCliente(cpf, cliente) {
 
         return new Promise((resolve, reject) => {
             const UPDATE = `
                 UPDATE CLIENTES
                 SET CPF = ?, NOME = ?, TELEFONE = ?, CEP = ?, ENDERECO = ?, CIDADE = ?, UF = ?, EMAIL = ?, SENHA = ? WHERE CPF = ?`
-                const array = [...cliente, cpf]
-            this.db.run(UPDATE,
+            const array = [...cliente, cpf]
+            db.run(UPDATE,
                 array,
                 (error) => {
                     if (error) {
