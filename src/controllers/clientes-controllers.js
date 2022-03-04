@@ -1,33 +1,24 @@
 const Cliente = require("../models/Clientes");
-const ClientesDAO = require("../DAO/ClientesDAO");
-const clientes = (app, bd) => {
-  const novoClienteDAO = new ClientesDAO(bd);
-  app.post("/clientes", async (req, res) => {
+// const ClientesDAO = require("../DAO/ClientesDAO");
+class ClientesController {
+  static async cadastrarCliente(req, res) {
+
     try {
-      const body = req.body;
-      const novoCliente = new Cliente(
-        body.cpf,
-        body.nome,
-        body.telefone,
-        body.cep,
-        body.endereco,
-        body.cidade,
-        body.uf,
-        body.email,
-        body.senha
-      );
-      const resposta = await novoClienteDAO.insereCliente(novoCliente);
-      res.status(200).json(resposta);
+      const { cpf, nome, telefone, cep, endereco, cidade, uf, email, senha } = req.body;
+      const novoCliente = new Cliente({ cpf, nome, telefone, cep, endereco, cidade, uf, email, senha });
+     await novoCliente.cadastrarCliente();
+      return res.status(200).json(novoCliente);
     } catch (error) {
       res.status(400).json({
         message: error.message,
         error: true,
       });
     }
-  });
-  app.get("/clientes", async (req, res) => {
+  }
+
+  static async listarTodosOsClientes(req, res) {
     try {
-      const resposta = await novoClienteDAO.pegaTodosClientes();
+      const resposta = await Cliente.listaTodosOsClientes();
 
       res.status(200).json(resposta);
     } catch (error) {
@@ -36,12 +27,12 @@ const clientes = (app, bd) => {
         error: true,
       });
     }
-  });
+  };
 
-  app.get("/clientes/:id", async (req, res) => {
+  static async listarClientePorId(req, res) {
     const id = req.params.id;
     try {
-      const resposta = await novoClienteDAO.retornaClientesDesejados(id);
+      const resposta = await Cliente.listarClientePorId(id);
       res.status(200).json(resposta);
     } catch (error) {
       res.status(400).json({
@@ -49,13 +40,13 @@ const clientes = (app, bd) => {
         error: true,
       });
     }
-  });
+  }
 
-  app.post("/clientes/login", async (req, res) => {
+
+  static async login(req, res) {
     try {
       const { email, senha } = req.body;
-      const login = await novoClienteDAO.buscaPorEmail(email);
-      console.log(login);
+      const login = await Cliente.buscaPorEmail(email);
       if (!login.requisicao || login.requisicao.SENHA !== senha) {
         return res.status(400).json({
           message: "Email ou senha inválidas!",
@@ -83,15 +74,14 @@ const clientes = (app, bd) => {
         error: true,
       });
     }
-  });
+  }
 
-  app.patch("/clientes/:cpf", async (req, res) => {
+
+  static async atualizarCliente(req, res) {
     try {
       const cpf = req.params.cpf;
       const body = req.body;
-      console.log(body);
-      const respostaGet = await novoClienteDAO.buscaPorCpf(cpf);
-      console.log(respostaGet);
+      const respostaGet = await Cliente.buscaPorCpf(cpf);
       const clienteAntigo = respostaGet.requisicao;
 
       if (clienteAntigo) {
@@ -106,7 +96,7 @@ const clientes = (app, bd) => {
           body.email || clienteAntigo.EMAIL,
           body.senha || clienteAntigo.SENHA,
         ];
-        const resposta = await novoClienteDAO.atualizaCliente(
+        const resposta = await Cliente.atualizarCliente(
           cpf,
           clienteAtualizado
         );
@@ -123,12 +113,12 @@ const clientes = (app, bd) => {
         error: true,
       });
     }
-  });
+  };
 
-  app.delete("/clientes/:cpf", async (req, res) => {
+  static async deletarCliente(req, res) {
     try {
       const cpf = req.params.cpf;
-      const resposta = await novoClienteDAO.deletaCliente(cpf);
+      const resposta = await Cliente.deletarCliente(cpf);
       res.status(200).json(resposta);
     } catch (error) {
       res.status(404).json({
@@ -136,6 +126,6 @@ const clientes = (app, bd) => {
         erro: true,
       });
     }
-  });
-};
-module.exports = clientes;
+  };
+}
+module.exports = ClientesController;
