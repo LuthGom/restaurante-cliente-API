@@ -1,11 +1,12 @@
 const Cliente = require("../models/Clientes");
-// const ClientesDAO = require("../DAO/ClientesDAO");
+const bcrypt = require('bcrypt')
 class ClientesController {
   static async cadastrarCliente(req, res) {
 
     try {
       const { cpf, nome, telefone, cep, endereco, cidade, uf, email, senha } = req.body;
-      const novoCliente = new Cliente({ cpf, nome, telefone, cep, endereco, cidade, uf, email, senha });
+      const senhaHashed = await bcrypt.hash(senha, 10);
+      const novoCliente = new Cliente({ cpf, nome, telefone, cep, endereco, cidade, uf, email, senha:senhaHashed });
       await novoCliente.cadastrarCliente();
       return res.status(200).json(novoCliente);
     } catch (error) {
@@ -47,7 +48,8 @@ class ClientesController {
     try {
       const { email, senha } = req.body;
       const login = await Cliente.buscaPorEmail(email);
-      if (!login || login.SENHA !== senha) {
+      const senhaHashed = await bcrypt.compare(senha, login.SENHA)
+      if (!login.EMAIL || senhaHashed == false) {
         return res.status(400).json({
           message: "Email ou senha inválidas!",
           error: true,
@@ -83,6 +85,8 @@ class ClientesController {
       const body = req.body;
       const respostaGet = await Cliente.buscaPorCpf(cpf);
       const clienteAntigo = respostaGet;
+      const novaSenhaHashed = await bcrypt.hash(req.body.senha, 10);
+
 
       if (clienteAntigo) {
         const clienteAtualizado = [
@@ -94,7 +98,7 @@ class ClientesController {
           body.cidade || clienteAntigo.CIDADE,
           body.uf || clienteAntigo.UF,
           body.email || clienteAntigo.EMAIL,
-          body.senha || clienteAntigo.SENHA,
+          novaSenhaHashed || clienteAntigo.SENHA,
         ];
         const resposta = await Cliente.atualizarCliente(
           cpf,
