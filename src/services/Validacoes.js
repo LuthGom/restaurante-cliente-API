@@ -72,7 +72,7 @@ class Validacoes {
         const letrasMinisculas = /[a-z]/
 
         const caracteresEspeciais = /[!|@|#|$|%|^|&|*|(|)|-|_]/
-        if (senha.length !== 8) {
+        if (senha.length < 8) {
             return retorno
         } else {
             let auxMa = 0
