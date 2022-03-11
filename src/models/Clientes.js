@@ -48,11 +48,10 @@ class NovoCliente {
         return cliente;
     }
     static async atualizarCliente(cpf, cliente) {
-        const atualizacaoDeCliente = await ClientesDAO.atualizarCliente(cpf, cliente)
-        if (!await NovoCliente.buscaPorCpf(cpf)) {
-            throw new Error(`O cliente de cpf ${this.cpf} não está cadastrado!`)
+        if (await NovoCliente.buscaPorCpf(cpf)) {
+            await ClientesDAO.atualizarCliente(cpf, cliente)
         }
-        return atualizacaoDeCliente;
+        else { throw new Error(`O cliente de cpf ${this.cpf} não está cadastrado!`) }
     }
     static async deletarCliente(cpf) {
         if (await NovoCliente.buscaPorCpf(cpf)) {

@@ -82,7 +82,7 @@ class ClientesController {
       const cpf = req.params.cpf;
       const body = req.body;
       const respostaGet = await Cliente.buscaPorCpf(cpf);
-      const clienteAntigo = respostaGet.requisicao;
+      const clienteAntigo = respostaGet;
 
       if (clienteAntigo) {
         const clienteAtualizado = [
@@ -100,7 +100,7 @@ class ClientesController {
           cpf,
           clienteAtualizado
         );
-        res.status(200).json(resposta);
+        res.status(200).json({clienteAtualizado: clienteAtualizado});
       } else {
         res.json({
           mensagem: `Cliente com cpf ${cpf} não encontrado`,
