@@ -47,7 +47,7 @@ class ClientesController {
     try {
       const { email, senha } = req.body;
       const login = await Cliente.buscaPorEmail(email);
-      if (!login || login.SENHA !== senha) {
+      if (!login.EMAIL !== email || login.SENHA !== senha) {
         return res.status(400).json({
           message: "Email ou senha inválidas!",
           error: true,
