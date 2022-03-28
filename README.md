@@ -81,7 +81,7 @@ e rode o seguinte comando no terminal:</li>
    
     "cpf": "string",
     "nome": "string",
-    "numero": int,
+    "telefone": int,
     "cep": int,
     "endereco": "string",
     "cidade": "string",
