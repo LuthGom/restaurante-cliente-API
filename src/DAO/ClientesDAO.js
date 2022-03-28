@@ -3,16 +3,18 @@ class ClientesDAO {
 
     static cadastrarCliente(novoCliente) {
         return new Promise((resolve, reject) => {
-            db.all(`INSERT INTO CLIENTES (CPF, NOME, TELEFONE, CEP, ENDERECO, CIDADE, UF, EMAIL, SENHA) VALUES (?,?,?,?,?,?,?,?,?);`,
+            db.all(`INSERT INTO CLIENTES (cpf, nome, telefone, cep, endereco, cidade, uf, email, senhaHash) VALUES (?,?,?,?,?,?,?,?,?);`,
                 [...Object.values(novoCliente)],
                 (error, rows) => {
                     if (error) {
+                        console.log(error);
                         reject({
                             "mensagem": error.message,
                             "erro": true
                         })
                     }
                     return resolve({ "return": rows });
+
                 })
         })
     }
@@ -95,7 +97,7 @@ class ClientesDAO {
                         "mensagem": error.message,
                         "erro": true
                     })
-                } 
+                }
                 resolve(rows)
 
             })
