@@ -1,12 +1,11 @@
 const Cliente = require("../models/Clientes");
-const bcrypt = require('bcrypt')
 class ClientesController {
   static async cadastrarCliente(req, res) {
 
     try {
       const { cpf, nome, telefone, cep, endereco, cidade, uf, email, senha } = req.body;
-      const senhaHashed = await bcrypt.hash(senha, 10);
-      const novoCliente = new Cliente({ cpf, nome, telefone, cep, endereco, cidade, uf, email, senha: senhaHashed });
+      const novoCliente = new Cliente({ cpf, nome, telefone, cep, endereco, cidade, uf, email });
+      await novoCliente.adicionaSenha(senha)
       await novoCliente.cadastrarCliente();
       return res.status(200).json(novoCliente);
     } catch (error) {
@@ -23,6 +22,7 @@ class ClientesController {
 
       res.status(200).json(resposta);
     } catch (error) {
+      console.log(error);
       res.status(400).json({
         message: error.message,
         error: true,
@@ -84,23 +84,20 @@ class ClientesController {
       const cpf = req.params.cpf;
       const body = { ...req.body };
       const clienteAntigo = await Cliente.buscaPorCpf(cpf);
-
-      
-      const respostaGet = await Cliente.buscaPorCpf(cpf);
-      const novaSenhaHashed = await bcrypt.hash(req.body.senha, 10);
+      const novaSenhaHashed = await bcrypt.hash(req.body.senha, 12);
 
 
       if (clienteAntigo) {
         const clienteAtualizado = [{
-          CPF: body.cpf || clienteAntigo.CPF,
-          NOME: body.nome || clienteAntigo.NOME,
-          TELEFONE: body.telefone || clienteAntigo.TELEFONE,
-          CEP: body.cep || clienteAntigo.CEP,
-          ENDERECO: body.endereco || clienteAntigo.ENDERECO,
-          CIDADE: body.cidade || clienteAntigo.CIDADE,
-          UF: body.uf || clienteAntigo.UF,
-          EMAIL: body.email || clienteAntigo.EMAIL,
-          SENHA: novaSenhaHashed || clienteAntigo.SENHA
+          cpf: body.cpf || clienteAntigo.cpf,
+          nome: body.nome || clienteAntigo.nome,
+          telefone: body.telefone || clienteAntigo.telefone,
+          cep: body.cep || clienteAntigo.cep,
+          endereco: body.endereco || clienteAntigo.endereco,
+          cidade: body.cidade || clienteAntigo.cidade,
+          uf: body.uf || clienteAntigo.uf,
+          email: body.email || clienteAntigo.email,
+          senha: novaSenhaHashed || clienteAntigo.senha
         }];
         const resposta = await Cliente.atualizarCliente(
           cpf,

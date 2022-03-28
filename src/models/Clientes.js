@@ -2,6 +2,8 @@
 
 const ClientesDAO = require('../DAO/ClientesDAO');
 const Validacoes = require('../services/Validacoes')
+const bcrypt = require('bcrypt')
+
 class NovoCliente {
     constructor(novoCliente) {
         this.cpf = novoCliente.cpf;
@@ -12,7 +14,7 @@ class NovoCliente {
         this.cidade = novoCliente.cidade;
         this.uf = novoCliente.uf;
         this.email = novoCliente.email;
-        this.senha = novoCliente.senha;
+        this.senhaHash = novoCliente.senhaHash;
 
         this.todasAsValidacoes();
     }
@@ -59,12 +61,22 @@ class NovoCliente {
         }
         else { throw new Error(`O cliente de cpf ${cpf} não está cadastrado!`) }
     }
+
+    async adicionaSenha(senha) {
+        Validacoes.autenticacaoSenha(senha)
+
+        this.senhaHash = await NovoCliente.gerarSenhaHash(senha)
+    }
+    static gerarSenhaHash(senha) {
+        const custo = 12;
+
+        return bcrypt.hash(senha, custo);
+    }
     todasAsValidacoes() {
         this.autenticacaoCPF();
         this.autenticacaoNome();
         this.autenticacaoEmail();
         this.autenticacaoTelefone();
-        this.autenticacaoSenha();
     }
 
     autenticacaoCPF() {
@@ -80,9 +92,8 @@ class NovoCliente {
     autenticacaoEmail() {
         Validacoes.autenticacaoEmail(this.email)
     }
-    autenticacaoSenha() {
-        Validacoes.autenticacaoSenha(this.senha)
-    }
+    // autenticacaoSenha() {
+    // }
 
 }
 

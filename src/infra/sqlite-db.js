@@ -6,16 +6,16 @@ const db = new sqlite3.Database(caminhoArq)
 
 const CLIENTES_SCHEMA = `
 CREATE TABLE IF NOT EXISTS "CLIENTES"(
-    "ID" INTEGER PRIMARY KEY AUTOINCREMENT, 
-    "CPF" VARCHAR(11),
-    "NOME" varchar(64),
-    "TELEFONE" INTEGER,
-    "CEP" INTEGER,
-    "ENDERECO" varchar(64),
-    "CIDADE" varchar(64),
-    "UF" varchar(4),
-    "EMAIL" varchar(64),
-    "SENHA" varchar(64)
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT, 
+    "cpf" VARCHAR(11),
+    "nome" varchar(64),
+    "telefone" INTEGER,
+    "cep" INTEGER,
+    "endereco" varchar(64),
+    "cidade" varchar(64),
+    "uf" varchar(4),
+    "email" varchar(64),
+    "senhaHash" varchar(64)
     
 )`;
 
@@ -27,8 +27,14 @@ function criaTableClient() {
     });
 }
 
-db.serialize( ()=> {
+db.serialize(() => {
     criaTableClient();
-})
 
+
+})
+process.on('SIGINT', () =>
+    db.close(() => {
+        process.exit(0);
+    })
+)
 module.exports = db;
