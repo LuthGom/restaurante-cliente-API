@@ -1,11 +1,12 @@
 const Cliente = require("../models/Clientes");
-// const ClientesDAO = require("../DAO/ClientesDAO");
+const bcrypt = require('bcrypt')
 class ClientesController {
   static async cadastrarCliente(req, res) {
 
     try {
       const { cpf, nome, telefone, cep, endereco, cidade, uf, email, senha } = req.body;
-      const novoCliente = new Cliente({ cpf, nome, telefone, cep, endereco, cidade, uf, email, senha });
+      const senhaHashed = await bcrypt.hash(senha, 10);
+      const novoCliente = new Cliente({ cpf, nome, telefone, cep, endereco, cidade, uf, email, senha: senhaHashed });
       await novoCliente.cadastrarCliente();
       return res.status(200).json(novoCliente);
     } catch (error) {
@@ -47,7 +48,8 @@ class ClientesController {
     try {
       const { email, senha } = req.body;
       const login = await Cliente.buscaPorEmail(email);
-      if (!login.EMAIL !== email || login.SENHA !== senha) {
+      const senhaHashed = await bcrypt.compare(senha, login.SENHA)
+      if (!login.EMAIL || senhaHashed == false) {
         return res.status(400).json({
           message: "Email ou senha inválidas!",
           error: true,
@@ -80,27 +82,31 @@ class ClientesController {
   static async atualizarCliente(req, res) {
     try {
       const cpf = req.params.cpf;
-      const body = req.body;
+      const body = { ...req.body };
+      const clienteAntigo = await Cliente.buscaPorCpf(cpf);
+
+      
       const respostaGet = await Cliente.buscaPorCpf(cpf);
-      const clienteAntigo = respostaGet;
+      const novaSenhaHashed = await bcrypt.hash(req.body.senha, 10);
+
 
       if (clienteAntigo) {
-        const clienteAtualizado = [
-          body.cpf || clienteAntigo.CPF,
-          body.nome || clienteAntigo.NOME,
-          body.telefone || clienteAntigo.TELEFONE,
-          body.cep || clienteAntigo.CEP,
-          body.endereco || clienteAntigo.ENDERECO,
-          body.cidade || clienteAntigo.CIDADE,
-          body.uf || clienteAntigo.UF,
-          body.email || clienteAntigo.EMAIL,
-          body.senha || clienteAntigo.SENHA,
-        ];
+        const clienteAtualizado = [{
+          CPF: body.cpf || clienteAntigo.CPF,
+          NOME: body.nome || clienteAntigo.NOME,
+          TELEFONE: body.telefone || clienteAntigo.TELEFONE,
+          CEP: body.cep || clienteAntigo.CEP,
+          ENDERECO: body.endereco || clienteAntigo.ENDERECO,
+          CIDADE: body.cidade || clienteAntigo.CIDADE,
+          UF: body.uf || clienteAntigo.UF,
+          EMAIL: body.email || clienteAntigo.EMAIL,
+          SENHA: novaSenhaHashed || clienteAntigo.SENHA
+        }];
         const resposta = await Cliente.atualizarCliente(
           cpf,
           clienteAtualizado
         );
-        res.status(200).json({clienteAtualizado: clienteAtualizado});
+        res.status(200).json({ clienteAtualizado: clienteAtualizado });
       } else {
         res.json({
           mensagem: `Cliente com cpf ${cpf} não encontrado`,
@@ -108,6 +114,7 @@ class ClientesController {
         });
       }
     } catch (error) {
+      console.log(error);
       res.json({
         mensagem: error.message,
         error: true,

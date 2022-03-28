@@ -107,7 +107,7 @@ class ClientesDAO {
             const UPDATE = `
                 UPDATE CLIENTES
                 SET CPF = ?, NOME = ?, TELEFONE = ?, CEP = ?, ENDERECO = ?, CIDADE = ?, UF = ?, EMAIL = ?, SENHA = ? WHERE CPF = ?`
-            const array = [...cliente, cpf]
+            const array = [...Object.values(cliente), cpf]
             db.run(UPDATE,
                 array,
                 (error) => {

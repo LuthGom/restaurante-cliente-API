@@ -7,6 +7,6 @@ module.exports =
         .post('/clientes', clientesController.cadastrarCliente)
         .post('/clientes/login', clientesController.login)
         .get('/clientes', clientesController.listarTodosOsClientes)
-        .get('clientes/:id', clientesController.listarClientePorId)
+        .get('/clientes/:id', clientesController.listarClientePorId)
         .delete('/clientes/:cpf', clientesController.deletarCliente)
         .patch('/clientes/:cpf', clientesController.atualizarCliente)
