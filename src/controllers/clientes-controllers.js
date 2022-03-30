@@ -1,4 +1,6 @@
 const Cliente = require("../models/Clientes");
+const criaTokenJWT = require('../services/Autenticacao');
+const blacklist = require('../../redis/manipula-blacklist');
 class ClientesController {
   static async cadastrarCliente(req, res) {
 
@@ -44,10 +46,23 @@ class ClientesController {
 
 
   static async login(req, res) {
-
-   res.status(200).json();
+    const token = criaTokenJWT(req.user);
+    res.set('Authorization', token);
+    res.status(204).json();
   }
 
+  static logout(req, res) {
+    try {
+      const token = req.token;
+      console.log("antes controller");
+      blacklist.adiciona(token);
+      console.log("depois controller");
+      res.status(204).json();
+
+    } catch (error) {
+      res.status(500).json({ erro: error.message });
+    }
+  }
 
   static async atualizarCliente(req, res) {
     try {

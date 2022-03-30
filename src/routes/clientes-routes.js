@@ -1,12 +1,14 @@
 const { Router } = require('express');
 const router = Router();
 const clientesController = require('../controllers/clientes-controllers');
-const passport = require('passport');
+const { local, bearer } = require('../middlewares/middlewaresAutenticacao')
+
 module.exports =
     router
-        .post('/clientes', clientesController.cadastrarCliente)
-        .post('/cliente/login', passport.authenticate('local', { session: false }), clientesController.login)
+        .post('/cliente', clientesController.cadastrarCliente)
+        .post('/cliente/login', local, clientesController.login)
+        .get('/cliente/logout', bearer, clientesController.logout)
         .get('/clientes', clientesController.listarTodosOsClientes)
-        .get('/clientes/:id', clientesController.listarClientePorId)
-        .delete('/clientes/:cpf', clientesController.deletarCliente)
-        .patch('/clientes/:cpf', clientesController.atualizarCliente)
+        .get('/cliente/:id', clientesController.listarClientePorId)
+        .delete('/cliente/:cpf', bearer, clientesController.deletarCliente)
+        .patch('/cliente/:cpf', clientesController.atualizarCliente)
