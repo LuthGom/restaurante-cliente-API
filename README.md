@@ -18,23 +18,23 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 <strong>Observação</strong> é recomendável a utilização de um editor de código que tenha familiaridade, caso não tenha com nenhum, recomenda-se o <a href="https://code.visualstudio.com/download">VsCode</a> pela intuitividade do mecanismo.
 
 # Dependências:
-![Badge](https://img.shields.io/badge/"bcrypt"-"%5E5.0.1"-red)
-![Badge](https://img.shields.io/badge/"cors"-"%5E2.8.5"-red)
-![Badge](https://img.shields.io/badge/"dotenv"-"%5E16.0.0"-red)
-![Badge](https://img.shields.io/badge/"express"-"%5E4.17.1"-red)
-![Badge](https://img.shields.io/badge/"jsonwebtoken"-"%5E8.5.1"-red)
-![Badge](https://img.shields.io/badge/"passport"-"%5E0.5.2"-red)
-![Badge](https://img.shields.io/badge/"passport-http-bearer"-"%5E1.0.1"-red)
-![Badge](https://img.shields.io/badge/"passport-local"-"%5E1.0.0"-red)
-![Badge](https://img.shields.io/badge/"redis"-"%5E4.0.4"-red)
-![Badge](https://img.shields.io/badge/"sqlite3"-"%5E5.0.2"-red)
+![Badge](https://img.shields.io/badge/"bcrypt"-"%5E5.0.1"-red)<br>
+![Badge](https://img.shields.io/badge/"cors"-"%5E2.8.5"-orange)<br>
+![Badge](https://img.shields.io/badge/"dotenv"-"%5E16.0.0"-yellow)<br>
+![Badge](https://img.shields.io/badge/"express"-"%5E4.17.1"-green)<br>
+![Badge](https://img.shields.io/badge/"jsonwebtoken"-"%5E8.5.1"-blue)<br>
+![Badge](https://img.shields.io/badge/"passport"-"%5E0.5.2"-purple)<br>
+![Badge](https://img.shields.io/badge/"passportLocal"-"%5E1.0.0"-pink)<br>
+![Badge](https://img.shields.io/badge/"passportHttpBearer"-"%5E1.0.1"-white)<br>
+![Badge](https://img.shields.io/badge/"redis"-"%5E4.0.4"-black)<br>
+![Badge](https://img.shields.io/badge/"sqlite3"-"%5E5.0.2"-roxy)<br>
 
 
 
 # Dependências de desenvolvimento:
-![Badge](https://img.shields.io/badge/"jest"-"%5E27.4.7"-red)
-![Badge](https://img.shields.io/badge/"nodemon"-"%5E2.0.15"-red)
-![Badge](https://img.shields.io/badge/"supertest"-"%5E6.2.2"-red)
+![Badge](https://img.shields.io/badge/"jest"-"%5E27.4.7"-white)
+![Badge](https://img.shields.io/badge/"nodemon"-"%5E2.0.15"-black)
+![Badge](https://img.shields.io/badge/"supertest"-"%5E6.2.2"-white)
 
 
 </p>
@@ -68,20 +68,7 @@ e rode o seguinte comando no terminal:</li>
 </p>
 
 ## Rotas da API:
-<p> Atualmente, há apenas a rota "/clientes", todavia, por esta rota conseguimos executar todos as operações do método CRUD, citado no início desta documentção.</p>
 
-# Para <strong>visualizar</strong> a lista de todos os clientes:
-<p> Operar o método HTTP Get no caminho na "url da API" + "/clientes </p>
-
-# Para <strong>pesquisar</strong> por clientes específicos utilizando seus id's:
-
-<p> Operar o método HTTP Get no caminho "url da API" + "clientes/id"</p>
-
-# Para <strong>cadastrar</strong> um novo cliente no banco de dados:
-
-<p> Operar o método HTTP Post no caminho da "url da API" + "clientes" com todas as informações necessárias para preenchimento dos campos no banco de dados. Veja um exemplo da estrutura de um objeto para requisição </p>
-
-<p>
 
 | Método | Rota | Descrição |
 | ------ | ---- | --------- |
@@ -92,6 +79,7 @@ e rode o seguinte comando no terminal:</li>
 | **POST** | `/cliente/login` | Autenticação de login do cliente  |
 | **PATCH** | `/cliente/:{id}` | Atualiza o cadastro do cliente pelo {cpf} |
 | **DELETE** | `/cliete/:{cpf}` | Deleta o cadastro do cliente pelo {cpf} |
+</p>
 
 
 ### CAMPOS NECESSÁRIOS PARA CADASTRO DE UM CLIENTE:
@@ -114,24 +102,28 @@ e rode o seguinte comando no terminal:</li>
 ```
 
 
-</p>
+### COMO REALIZAR O LOGIN:
 
- </p>
+```json
+{
+    "email": "email cdastrado",
+    "senha": "senha cadastrada"
+}
+```
+### o login gerará um token, que vai ser requisitado para realizar outras ações, como logout, delete e ações futuras relaciodas a outras entidades que podem ser adicionadas e relacionadas ao cliente.
 
-# Para <strong>Corrigir</strong> um ou mais dados de um ciente cadastrado:
+### COMO PEGAR E UTILIZAR O TOKEN GERADO PELO LOGIN:
 
-<p>Operar o método HTTP Patch no caminho da "url da API" + "/clientes/id" contendo no corpo da requisição <strong>meramente</strong>
-os dados a serem alterados. Exemplo: supondo que apenas o campo senha será alterado:</p>
+<img src="./midia/ilustracao-login.gif" />
 
-<p>
-    "senha": "string"
-</p>
+### COMO ATUALIZAR UM CLIENTE:
 
-<p>Ou seja, não há necessidade de digitar todos os dados novamente.</p>
-
-# Para <strong>deletar</strong> um cliente do banco de dados:
-
-<p>Operar o método HTTP Delete no caminho da "url da API" + "/clientes/id" </p>
+```json
+{
+    exemplo:
+    "email": "novo email"
+}
+```
 
 
 ## Autor 🌈
