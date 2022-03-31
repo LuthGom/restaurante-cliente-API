@@ -3,7 +3,7 @@
 </p>
 
 ## Descrição:
-<p>A presente aplicação é uma funcionalidade back-end que gera e administra, de forma mais fácil, o cadastro de clientes com foco em entrega de produtos de resturante(delivery), entretanto, a aplicação foi criada de forma de possa ser utilizada, e adaptada, para cadastro de clientes de qualquer serviço oferecido. Para o programa, o banco de dados relacionais SQLite foi usado, assim como os verbos HTTP e o padrão REST, além da arquitetura MVC, de forma a estruturar coerentemente as operações do método CRUD. 
+<p>A presente aplicação é uma funcionalidade back-end que gera e administra, de forma mais fácil, o cadastro de clientes com foco em entrega de produtos de resturante(delivery), entretanto, a aplicação foi criada de forma de possa ser utilizada, e adaptada, para cadastro de clientes de qualquer serviço oferecido. Para o programa, o banco de dados relacionais SQLite foi usado, assim como os verbos HTTP e o padrão REST, além da arquitetura MVC, de forma a estruturar coerentemente as operações do método CRUD. Além disso, a API conta com autenticação de login por tokens, utilizando a lib jsonwebtoken e outras dependências para estratégias de autenticação local e bearer. 
 
 Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de Dev. Web FullStack da <a href="https://www.resilia.com.br">Resilia Educação.</a></p>
 
@@ -18,13 +18,23 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 <strong>Observação</strong> é recomendável a utilização de um editor de código que tenha familiaridade, caso não tenha com nenhum, recomenda-se o <a href="https://code.visualstudio.com/download">VsCode</a> pela intuitividade do mecanismo.
 
 # Dependências:
-
-![Badge](https://img.shields.io/badge/"express"-"%5E4.17.1"-red)
-![Badge](https://img.shields.io/badge/"sqlite3"-"%5E5.0.2"-red)
+![Badge](https://img.shields.io/badge/"bcrypt"-"%5E5.0.1"-red)
 ![Badge](https://img.shields.io/badge/"cors"-"%5E2.8.5"-red)
+![Badge](https://img.shields.io/badge/"dotenv"-"%5E16.0.0"-red)
+![Badge](https://img.shields.io/badge/"express"-"%5E4.17.1"-red)
+![Badge](https://img.shields.io/badge/"jsonwebtoken"-"%5E8.5.1"-red)
+![Badge](https://img.shields.io/badge/"passport"-"%5E0.5.2"-red)
+![Badge](https://img.shields.io/badge/"passport-http-bearer"-"%5E1.0.1"-red)
+![Badge](https://img.shields.io/badge/"passport-local"-"%5E1.0.0"-red)
+![Badge](https://img.shields.io/badge/"redis"-"%5E4.0.4"-red)
+![Badge](https://img.shields.io/badge/"sqlite3"-"%5E5.0.2"-red)
+
+
 
 # Dependências de desenvolvimento:
+![Badge](https://img.shields.io/badge/"jest"-"%5E27.4.7"-red)
 ![Badge](https://img.shields.io/badge/"nodemon"-"%5E2.0.15"-red)
+![Badge](https://img.shields.io/badge/"supertest"-"%5E6.2.2"-red)
 
 
 </p>
@@ -73,8 +83,19 @@ e rode o seguinte comando no terminal:</li>
 
 <p>
 
+| Método | Rota | Descrição |
+| ------ | ---- | --------- |
+| **GET** | `/clientes` | Lista todas os clientes |
+| **GET** | `/cliente/:{id}` | Busca o cliente pelo {id} |
+| **GET** | `/cliente/logout` | Realiza logout do cliente |
+| **POST** | `/cliente` | Cadastra um novo cliente  |
+| **POST** | `/cliente/login` | Autenticação de login do cliente  |
+| **PATCH** | `/cliente/:{id}` | Atualiza o cadastro do cliente pelo {cpf} |
+| **DELETE** | `/cliete/:{cpf}` | Deleta o cadastro do cliente pelo {cpf} |
 
 
+### CAMPOS NECESSÁRIOS PARA CADASTRO DE UM CLIENTE:
+ 
 ```json 
  {
 
