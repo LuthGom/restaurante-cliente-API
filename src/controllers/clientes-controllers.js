@@ -1,4 +1,6 @@
 const Cliente = require("../models/Clientes");
+const criaTokenJWT = require('../services/Autenticacao');
+const blacklist = require('../../redis/manipula-blacklist');
 class ClientesController {
   static async cadastrarCliente(req, res) {
 
@@ -22,7 +24,6 @@ class ClientesController {
 
       res.status(200).json(resposta);
     } catch (error) {
-      console.log(error);
       res.status(400).json({
         message: error.message,
         error: true,
@@ -45,39 +46,23 @@ class ClientesController {
 
 
   static async login(req, res) {
-    try {
-      const { email, senha } = req.body;
-      const login = await Cliente.buscaPorEmail(email);
-      const senhaHashed = await bcrypt.compare(senha, login.SENHA)
-      if (!login.EMAIL || senhaHashed == false) {
-        return res.status(400).json({
-          message: "Email ou senha inválidas!",
-          error: true,
-        });
-      }
-      res.status(200).json({
-        error: false,
-        cliente: {
-          id: login.ID,
-          cpf: login.CPF,
-          nome: login.NOME,
-          telefone: login.TELEFONE,
-          cep: login.CEP,
-          endereco: login.ENDERECO,
-          cidade: login.CIDADE,
-          uf: login.UF,
-          email: login.EMAIL,
-          senha: login.SENHA,
-        },
-      });
-    } catch (error) {
-      res.status(500).json({
-        message: error.message,
-        error: true,
-      });
-    }
+    const token = criaTokenJWT(req.user);
+    res.set('Authorization', token);
+    res.status(204).json();
   }
 
+  static logout(req, res) {
+    try {
+      const token = req.token;
+      console.log("antes controller");
+      blacklist.adiciona(token);
+      console.log("depois controller");
+      res.status(204).json();
+
+    } catch (error) {
+      res.status(500).json({ erro: error.message });
+    }
+  }
 
   static async atualizarCliente(req, res) {
     try {
@@ -111,7 +96,6 @@ class ClientesController {
         });
       }
     } catch (error) {
-      console.log(error);
       res.json({
         mensagem: error.message,
         error: true,
