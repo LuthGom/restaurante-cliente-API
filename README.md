@@ -73,12 +73,12 @@ e rode o seguinte comando no terminal:</li>
 | Método | Rota | Descrição |
 | ------ | ---- | --------- |
 | **GET** | `/clientes` | Lista todas os clientes |
-| **GET** | `/cliente/:{id}` | Busca o cliente pelo {id} |
+| **GET** | `/cliente/:id` | Busca o cliente pelo {id} |
 | **GET** | `/cliente/logout` | Realiza logout do cliente |
 | **POST** | `/cliente` | Cadastra um novo cliente  |
 | **POST** | `/cliente/login` | Autenticação de login do cliente  |
-| **PATCH** | `/cliente/:{id}` | Atualiza o cadastro do cliente pelo {cpf} |
-| **DELETE** | `/cliete/:{cpf}` | Deleta o cadastro do cliente pelo {cpf} |
+| **PATCH** | `/cliente/:id` | Atualiza o cadastro do cliente pelo {cpf} |
+| **DELETE** | `/cliete/:cpf` | Deleta o cadastro do cliente pelo {cpf} |
 </p>
 
 
