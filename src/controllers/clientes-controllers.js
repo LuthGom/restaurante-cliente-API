@@ -1,15 +1,35 @@
 const Cliente = require("../models/Clientes");
-const criaTokenJWT = require('../services/Autenticacao');
-const blacklist = require('../../redis/manipula-blacklist');
+const criaTokenJWT = require("../services/Autenticacao");
+const blacklist = require("../../redis/manipula-blacklist");
 class ClientesController {
   static async cadastrarCliente(req, res) {
-
     try {
-      const { cpf, nome, telefone, cep, endereco, cidade, uf, email, senha } = req.body;
-      const novoCliente = new Cliente({ cpf, nome, telefone, cep, endereco, cidade, uf, email });
-      await novoCliente.adicionaSenha(senha)
+      const { cpf, nome, telefone, cep, endereco, cidade, uf, email, senha } =
+        req.body;
+      const novoCliente = new Cliente({
+        cpf,
+        nome,
+        telefone,
+        cep,
+        endereco,
+        cidade,
+        uf,
+        email,
+      });
+      await novoCliente.adicionaSenha(senha);
       await novoCliente.cadastrarCliente();
-      return res.status(200).json(novoCliente);
+      return res.status(200).json({
+        novoCliente: {
+          cpf,
+          nome,
+          telefone,
+          cep,
+          endereco,
+          cidade,
+          uf,
+          email,
+        },
+      });
     } catch (error) {
       res.status(400).json({
         message: error.message,
@@ -21,15 +41,27 @@ class ClientesController {
   static async listarTodosOsClientes(req, res) {
     try {
       const resposta = await Cliente.listaTodosOsClientes();
-
-      res.status(200).json(resposta);
+      const cliente = resposta.clientes.map((cliente) => {
+        return {
+          id: cliente.id,
+          cpf: cliente.cpf,
+          email: cliente.email,
+          nome: cliente.nome,
+          telefone: cliente.telefone,
+          cep: cliente.cep,
+          endereco: cliente.endereco,
+          cidade: cliente.cidade,
+          uf: cliente.uf,
+        };
+      });
+      res.status(200).json({clientes:cliente});
     } catch (error) {
       res.status(400).json({
         message: error.message,
         error: true,
       });
     }
-  };
+  }
 
   static async listarClientePorId(req, res) {
     const id = req.params.id;
@@ -44,21 +76,17 @@ class ClientesController {
     }
   }
 
-
   static async login(req, res) {
     const token = criaTokenJWT(req.user);
-    res.set('Authorization', token);
+    res.set("Authorization", token);
     res.status(204).json();
   }
 
   static logout(req, res) {
     try {
       const token = req.token;
-      console.log("antes controller");
       blacklist.adiciona(token);
-      console.log("depois controller");
       res.status(204).json();
-
     } catch (error) {
       res.status(500).json({ erro: error.message });
     }
@@ -71,23 +99,22 @@ class ClientesController {
       const clienteAntigo = await Cliente.buscaPorCpf(cpf);
       const novaSenhaHashed = await bcrypt.hash(req.body.senha, 12);
 
-
       if (clienteAntigo) {
-        const clienteAtualizado = [{
-          cpf: body.cpf || clienteAntigo.cpf,
-          nome: body.nome || clienteAntigo.nome,
-          telefone: body.telefone || clienteAntigo.telefone,
-          cep: body.cep || clienteAntigo.cep,
-          endereco: body.endereco || clienteAntigo.endereco,
-          cidade: body.cidade || clienteAntigo.cidade,
-          uf: body.uf || clienteAntigo.uf,
-          email: body.email || clienteAntigo.email,
-          senha: novaSenhaHashed || clienteAntigo.senha
-        }];
-        const resposta = await Cliente.atualizarCliente(
-          cpf,
-          clienteAtualizado
-        );
+        const clienteAtualizado = [
+          {
+            cpf: body.cpf || clienteAntigo.cpf,
+            nome: body.nome || clienteAntigo.nome,
+            telefone: body.telefone || clienteAntigo.telefone,
+            cep: body.cep || clienteAntigo.cep,
+            endereco: body.endereco || clienteAntigo.endereco,
+            cidade: body.cidade || clienteAntigo.cidade,
+            uf: body.uf || clienteAntigo.uf,
+            email: body.email || clienteAntigo.email,
+            senha:
+              (await novoCliente.adicionaSenha(senha)) || clienteAntigo.senha,
+          },
+        ];
+        const resposta = await Cliente.atualizarCliente(cpf, clienteAtualizado);
         res.status(200).json({ clienteAtualizado: clienteAtualizado });
       } else {
         res.json({
@@ -96,12 +123,13 @@ class ClientesController {
         });
       }
     } catch (error) {
+      console.log(error);
       res.json({
         mensagem: error.message,
         error: true,
       });
     }
-  };
+  }
 
   static async deletarCliente(req, res) {
     try {
@@ -109,7 +137,7 @@ class ClientesController {
       const resposta = await Cliente.deletarCliente(cpf);
       res.status(200).json({
         resposta: `Cliente de cpf ${cpf} deletado!`,
-        erro: false
+        erro: false,
       });
     } catch (error) {
       res.status(404).json({
@@ -117,6 +145,6 @@ class ClientesController {
         erro: true,
       });
     }
-  };
+  }
 }
 module.exports = ClientesController;
