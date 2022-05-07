@@ -8,14 +8,14 @@ const CLIENTES_SCHEMA = `
 CREATE TABLE IF NOT EXISTS "CLIENTES"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT, 
     "cpf" VARCHAR(11),
-    "nome" varchar(64),
-    "telefone" INTEGER,
-    "cep" INTEGER,
-    "endereco" varchar(64),
-    "cidade" varchar(64),
-    "uf" varchar(4),
-    "email" varchar(64),
-    "senhaHash" varchar(64)
+    "nome" VARCHAR(64),
+    "telefone" VARCHAR(11),
+    "cep" VARCHAR(11),
+    "endereco" VARCHAR(64),
+    "cidade" VARCHAR(64),
+    "uf" VARCHAR(4),
+    "email" VARCHAR(64),
+    "senhaHash" VARCHAR(64)
     
 )`;
 
