@@ -5,6 +5,13 @@
 ## Descrição:
 <p>A presente aplicação é uma funcionalidade back-end que gera e administra, de forma mais fácil, o cadastro de clientes com foco em entrega de produtos de resturante(delivery), entretanto, a aplicação foi criada de forma de possa ser utilizada, e adaptada, para cadastro de clientes de qualquer serviço oferecido. Para o programa, o banco de dados relacionais SQLite foi usado, assim como os verbos HTTP e o padrão REST, além da arquitetura MVC, de forma a estruturar coerentemente as operações do método CRUD. Além disso, a API conta com autenticação de login por tokens, utilizando a lib jsonwebtoken e outras dependências para estratégias de autenticação local e bearer. 
 
+Considerando a forma como a lógica de autenticação por tokens foi implementada, utilizando redis para desenvolvimento local, pelo menos por enquanto, para que a API rode localmente de forma impecável, é preciso ter o redis rodando em sua máquina.
+
+Instruções de instação disponível em:
+[redis.io](https://redis.io/docs/getting-started/installation/install-redis-on-linux/)
+
+Caso o sistema operacional seja Windows, recomendo fortemente e leitura do blog para tal: [redis.com](https://redis.com/blog/redis-on-windows-10/)
+   
 Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de Dev. Web FullStack da <a href="https://www.resilia.com.br">Resilia Educação.</a></p>
 
 
@@ -90,8 +97,8 @@ e rode o seguinte comando no terminal:</li>
    
     "cpf": "string",
     "nome": "string",
-    "telefone": int,
-    "cep": int,
+    "telefone": "string",
+    "cep": "string",
     "endereco": "string",
     "cidade": "string",
     "uf": "string",
