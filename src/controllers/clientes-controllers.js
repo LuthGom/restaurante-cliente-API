@@ -54,7 +54,7 @@ class ClientesController {
           uf: cliente.uf,
         };
       });
-      res.status(200).json({clientes:cliente});
+      res.status(200).json({ clientes: cliente });
     } catch (error) {
       res.status(400).json({
         message: error.message,
@@ -67,7 +67,20 @@ class ClientesController {
     const id = req.params.id;
     try {
       const resposta = await Cliente.listarClientePorId(id);
-      res.status(200).json(resposta);
+      const cliente = resposta.requisicao.map((cliente) => {
+        return {
+          id: cliente.id,
+          cpf: cliente.cpf,
+          email: cliente.email,
+          nome: cliente.nome,
+          telefone: cliente.telefone,
+          cep: cliente.cep,
+          endereco: cliente.endereco,
+          cidade: cliente.cidade,
+          uf: cliente.uf,
+        };
+      });
+      res.status(200).json({cliente: cliente});
     } catch (error) {
       res.status(400).json({
         message: error.message,
