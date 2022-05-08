@@ -20,10 +20,15 @@ class NovoCliente {
   }
 
   async cadastrarCliente() {
-    if (!(await NovoCliente.buscaPorCpf(this.cpf)) && !(await NovoCliente.buscaPorEmail(this.email))) {
+    if (
+      !(await NovoCliente.buscaPorCpf(this.cpf)) &&
+      !(await NovoCliente.buscaPorEmail(this.email))
+    ) {
       return ClientesDAO.cadastrarCliente(this);
     }
-    throw new Error(`O cliente de cpf ${this.cpf} e email ${this.email} já está cadastrado!`);
+    throw new Error(
+      `O cliente de cpf ${this.cpf} e email ${this.email} já está cadastrado!`
+    );
   }
   static listaTodosOsClientes() {
     return ClientesDAO.listarTodosOsClientes();
