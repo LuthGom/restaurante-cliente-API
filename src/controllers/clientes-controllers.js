@@ -80,7 +80,7 @@ class ClientesController {
           uf: cliente.uf,
         };
       });
-      res.status(200).json({cliente: cliente});
+      res.status(200).json({ cliente: cliente });
     } catch (error) {
       res.status(400).json({
         message: error.message,
@@ -108,25 +108,26 @@ class ClientesController {
   static async atualizarCliente(req, res) {
     try {
       const cpf = req.params.cpf;
-      const body = { ...req.body };
+      const body = req.body;
       const clienteAntigo = await Cliente.buscaPorCpf(cpf);
-      const novaSenhaHashed = await bcrypt.hash(req.body.senha, 12);
+      // const novaSenhaHashed = await bcrypt.hash(req.body.senha, 12);
 
+      if (body.senhaHash && body.senhaHash !== undefined) {
+        body.senhaHash = await Cliente.gerarSenhaHash(body.senhaHash);
+      }
       if (clienteAntigo) {
-        const clienteAtualizado = [
-          {
-            cpf: body.cpf || clienteAntigo.cpf,
-            nome: body.nome || clienteAntigo.nome,
-            telefone: body.telefone || clienteAntigo.telefone,
-            cep: body.cep || clienteAntigo.cep,
-            endereco: body.endereco || clienteAntigo.endereco,
-            cidade: body.cidade || clienteAntigo.cidade,
-            uf: body.uf || clienteAntigo.uf,
-            email: body.email || clienteAntigo.email,
-            senha:
-              (await novoCliente.adicionaSenha(senha)) || clienteAntigo.senha,
-          },
-        ];
+        const clienteAtualizado = new Cliente({
+          cpf: body.cpf || clienteAntigo.cpf,
+          nome: body.nome || clienteAntigo.nome,
+          telefone: body.telefone || clienteAntigo.telefone,
+          cep: body.cep || clienteAntigo.cep,
+          endereco: body.endereco || clienteAntigo.endereco,
+          cidade: body.cidade || clienteAntigo.cidade,
+          uf: body.uf || clienteAntigo.uf,
+          email: body.email || clienteAntigo.email,
+          senhaHash: body.senhaHash || clienteAntigo.senhaHash,
+        });
+
         const resposta = await Cliente.atualizarCliente(cpf, clienteAtualizado);
         res.status(200).json({ clienteAtualizado: clienteAtualizado });
       } else {
@@ -136,7 +137,6 @@ class ClientesController {
         });
       }
     } catch (error) {
-      console.log(error);
       res.json({
         mensagem: error.message,
         error: true,
