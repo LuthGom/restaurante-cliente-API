@@ -92,9 +92,9 @@ class NovoCliente {
     autenticacaoEmail() {
         Validacoes.autenticacaoEmail(this.email)
     }
-    // autenticacaoSenha() {
-    // }
-
+    async addSenhaCriptograda() {
+        this.senhaHash = await NovoCliente.gerarSenhaHash(this.senhaHash)
+    }
 }
 
 
