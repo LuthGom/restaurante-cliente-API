@@ -108,7 +108,7 @@ class ClientesDAO {
         return new Promise((resolve, reject) => {
             const UPDATE = `
                 UPDATE CLIENTES
-                SET CPF = ?, NOME = ?, TELEFONE = ?, CEP = ?, ENDERECO = ?, CIDADE = ?, UF = ?, EMAIL = ?, SENHA = ? WHERE CPF = ?`
+                SET cpf = ?, nome = ?, telefone = ?, cep = ?, endereco = ?, cidade = ?, uf = ?, email = ?, senhaHash = ? WHERE cpf = ?`
             const array = [...Object.values(cliente), cpf]
             db.run(UPDATE,
                 array,
