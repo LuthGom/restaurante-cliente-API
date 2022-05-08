@@ -7,7 +7,6 @@ class ClientesDAO {
                 [...Object.values(novoCliente)],
                 (error, rows) => {
                     if (error) {
-                        console.log(error);
                         reject({
                             "mensagem": error.message,
                             "erro": true

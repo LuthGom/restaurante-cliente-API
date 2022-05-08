@@ -36,7 +36,6 @@ describe("Testagem de rota POST", () => {
         senha: "Reccahj@",
       }
       const resposta = await request(app).post("/clientes").send(clienteErrado)
-      // console.log('resposta',resposta);
       expect(resposta.statusCode).toBe(400)
     } catch (erro) {
       return erro;

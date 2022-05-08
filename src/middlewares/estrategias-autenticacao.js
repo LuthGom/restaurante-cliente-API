@@ -34,10 +34,8 @@ class EstrategiasAutenticacao {
             new BearerStrategy(
                 async (token, done) => {
                     try {
-                        console.log("antes");
                         
                         await EstrategiasAutenticacao.verificaTokenBlacklist(token);
-                        console.log("depois");
                         const payload = verify(token, process.env.CHAVE_JWT);
                         const cliente = await Cliente.buscaPorCpf(payload.cpf);
                         done(null, cliente, { token: token });
