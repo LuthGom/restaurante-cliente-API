@@ -1,103 +1,99 @@
 // const { autenticacaoCPF, autenticacaoNome, autenticacaoTelefone, autenticacaoEmail, autenticacaoSenha } = require('../services/Validacoes');
 
-const ClientesDAO = require('../DAO/ClientesDAO');
-const Validacoes = require('../services/Validacoes')
-const bcrypt = require('bcrypt')
+const ClientesDAO = require("../DAO/ClientesDAO");
+const Validacoes = require("../services/Validacoes");
+const bcrypt = require("bcrypt");
 
 class NovoCliente {
-    constructor(novoCliente) {
-        this.cpf = novoCliente.cpf;
-        this.nome = novoCliente.nome;
-        this.telefone = novoCliente.telefone;
-        this.cep = novoCliente.cep;
-        this.endereco = novoCliente.endereco;
-        this.cidade = novoCliente.cidade;
-        this.uf = novoCliente.uf;
-        this.email = novoCliente.email;
-        this.senhaHash = novoCliente.senhaHash;
+  constructor(novoCliente) {
+    this.cpf = novoCliente.cpf;
+    this.nome = novoCliente.nome;
+    this.telefone = novoCliente.telefone;
+    this.cep = novoCliente.cep;
+    this.endereco = novoCliente.endereco;
+    this.cidade = novoCliente.cidade;
+    this.uf = novoCliente.uf;
+    this.email = novoCliente.email;
+    this.senhaHash = novoCliente.senhaHash;
 
-        this.todasAsValidacoes();
-    }
+    this.todasAsValidacoes();
+  }
 
-    async cadastrarCliente() {
-        if (!await NovoCliente.buscaPorCpf(this.cpf)) {
-            return ClientesDAO.cadastrarCliente(this)
-        }
-        throw new Error(`O cliente de cpf ${this.cpf} já está cadastrado!`)
+  async cadastrarCliente() {
+    if (!(await NovoCliente.buscaPorCpf(this.cpf))) {
+      return ClientesDAO.cadastrarCliente(this);
     }
-    static listaTodosOsClientes() {
-        return ClientesDAO.listarTodosOsClientes();
+    throw new Error(`O cliente de cpf ${this.cpf} já está cadastrado!`);
+  }
+  static listaTodosOsClientes() {
+    return ClientesDAO.listarTodosOsClientes();
+  }
+  static listarClientePorId(id) {
+    const cliente = ClientesDAO.listarClientePorId(id);
+    if (!cliente) {
+      throw new Error("Cliente não cadastrado!");
     }
-    static listarClientePorId(id) {
-        const cliente = ClientesDAO.listarClientePorId(id)
-        if (!cliente) {
-            throw new Error("Cliente não cadastrado!")
-        }
-        return cliente;
+    return cliente;
+  }
+  static async buscaPorEmail(email) {
+    const cliente = await ClientesDAO.buscaPorEmail(email);
+    if (!cliente) {
+      return null;
     }
-    static async buscaPorEmail(email) {
-        const cliente = await ClientesDAO.buscaPorEmail(email)
-        if (!cliente) {
-            return null
-        }
-        return cliente;
+    return cliente;
+  }
+  static async buscaPorCpf(cpf) {
+    const cliente = await ClientesDAO.buscaPorCpf(cpf);
+    if (!cliente) {
+      return null;
     }
-    static async buscaPorCpf(cpf) {
-        const cliente = await ClientesDAO.buscaPorCpf(cpf)
-        if (!cliente) {
-            return null;
-        }
-        return cliente;
+    return cliente;
+  }
+  static async atualizarCliente(cpf, cliente) {
+    if (await NovoCliente.buscaPorCpf(cpf)) {
+      await ClientesDAO.atualizarCliente(cpf, cliente);
+    } else {
+      throw new Error(`O cliente de cpf ${this.cpf} não está cadastrado!`);
     }
-    static async atualizarCliente(cpf, cliente) {
-        if (await NovoCliente.buscaPorCpf(cpf)) {
-            await ClientesDAO.atualizarCliente(cpf, cliente)
-        }
-        else { throw new Error(`O cliente de cpf ${this.cpf} não está cadastrado!`) }
+  }
+  static async deletarCliente(cpf) {
+    if (await NovoCliente.buscaPorCpf(cpf)) {
+      await ClientesDAO.deletarCliente(cpf);
+    } else {
+      throw new Error(`O cliente de cpf ${cpf} não está cadastrado!`);
     }
-    static async deletarCliente(cpf) {
-        if (await NovoCliente.buscaPorCpf(cpf)) {
-            await ClientesDAO.deletarCliente(cpf);
-        }
-        else { throw new Error(`O cliente de cpf ${cpf} não está cadastrado!`) }
-    }
+  }
 
-    async adicionaSenha(senha) {
-        Validacoes.autenticacaoSenha(senha)
+  async adicionaSenha(senha) {
+    Validacoes.autenticacaoSenha(senha);
 
-        this.senhaHash = await NovoCliente.gerarSenhaHash(senha)
-    }
-    static gerarSenhaHash(senha) {
-        const custo = 12;
+    this.senhaHash = await NovoCliente.gerarSenhaHash(senha);
+  }
+  static gerarSenhaHash(senha) {
+    const custo = 12;
 
-        return bcrypt.hash(senha, custo);
-    }
-    todasAsValidacoes() {
-        this.autenticacaoCPF();
-        this.autenticacaoNome();
-        this.autenticacaoEmail();
-        this.autenticacaoTelefone();
-    }
+    return bcrypt.hash(senha, custo);
+  }
+  todasAsValidacoes() {
+    this.autenticacaoCPF();
+    this.autenticacaoNome();
+    this.autenticacaoEmail();
+    this.autenticacaoTelefone();
+  }
 
-    autenticacaoCPF() {
-        Validacoes.autenticacaoCPF(this.cpf)
-    }
-    autenticacaoNome() {
-        Validacoes.autenticacaoNome(this.nome)
-    }
-    autenticacaoTelefone() {
-        Validacoes.autenticacaoTelefone(this.telefone)
-    }
+  autenticacaoCPF() {
+    Validacoes.autenticacaoCPF(this.cpf);
+  }
+  autenticacaoNome() {
+    Validacoes.autenticacaoNome(this.nome);
+  }
+  autenticacaoTelefone() {
+    Validacoes.autenticacaoTelefone(this.telefone);
+  }
 
-    autenticacaoEmail() {
-        Validacoes.autenticacaoEmail(this.email)
-    }
-    async addSenhaCriptograda() {
-        this.senhaHash = await NovoCliente.gerarSenhaHash(this.senhaHash)
-    }
+  autenticacaoEmail() {
+    Validacoes.autenticacaoEmail(this.email);
+  }
 }
 
-
-module.exports = NovoCliente
-
-
+module.exports = NovoCliente;
