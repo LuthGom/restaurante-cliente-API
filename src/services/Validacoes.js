@@ -1,111 +1,104 @@
 class Validacoes {
-    static autenticacaoCPF(cpf) {
-        const strg = cpf.toString();
-        const replace = strg.replace(/\D/g, '')
-        let splitCPF = replace.split('')
-        if (splitCPF.length < 11) {
-            throw new Error("Cpf inválido!")
-        } else {
+  static autenticacaoCPF(cpf) {
+    const strg = cpf.toString();
+    const replace = strg.replace(/\D/g, "");
+    let splitCPF = replace.split("");
+    if (splitCPF.length < 11) {
+      throw new Error("Cpf inválido!");
+    } else {
+      let dez = 10;
+      let onze = 11;
+      let arrVeriricaDigitoUm = [];
+      let arrVeriricaDigitoDois = [];
 
-            // numeros chaves para algoritmo de validação do CPF. o 10 é utilizado na primeira parte da autenticação e o 11 na segunad parte.
-            let dez = 10
-            let onze = 11
-            let arrayVerifUm = []
-            let arrayVerifDois = []
-            // autenticação do primeiro digito para validar o CPF
-            for (let i = 0; i < 10; i++) {
-                if (dez < 2) {
+      const verificacaoPrimeiroDigito = Validacoes.multiplicaEDivide(
+        dez,
+        arrVeriricaDigitoUm
+      );
+      const verificacaoSegundoDigito = Validacoes.multiplicaEDivide(
+        onze,
+        arrVeriricaDigitoDois
+      );
 
-                    break
-                } else {
-                    arrayVerifUm.push(splitCPF[i] * dez--)
-                }
-            }
-            const soma1 = arrayVerifUm.reduce((soma1, els) => soma1 + els)
-            let primeiraAutenticacao = ((soma1 * 10) % 11).toString()
-            // autenticação do segundo digito para validar o CPF
-            for (let j = 0; j < 11; j++) {
-                if (onze < 2) {
-                    break
-                } else {
-                    arrayVerifDois.push(splitCPF[j] * onze--)
-                }
-            }
-            const soma2 = arrayVerifDois.reduce((soma2, els) => soma2 + els)
-            let segundaAutenticacao = ((soma2 * 10) % 11).toString()
+      if (
+        verificacaoPrimeiroDigito === splitCPF[9] &&
+        verificacaoSegundoDigito === splitCPF[10]
+      ) {
+        return replace;
+      } else {
+        throw new Error(
+          `Os dígitos retornados são ${primeiraAutenticacao}${segundaAutenticacao}. o CPF é inválido!`
+        );
+      }
+    }
+  }
+  static autenticacaoNome(nome) {
+    if (nome.length < 8) {
+      throw new error("Campo nome deve ter ao menos 8 caracteres!");
+    } else {
+      return nome.toUpperCase();
+    }
+  }
+  static autenticacaoTelefone(telefone) {
+    if (telefone.length < 11) {
+      throw new Error("Campo telefone deve contar ao menos 11 digitos!");
+    } else {
+      return telefone;
+    }
+  }
 
-            primeiraAutenticacao === 10 ? 0 : primeiraAutenticacao === 11 ? 0 : primeiraAutenticacao
-            segundaAutenticacao === 10 ? 0 : segundaAutenticacao === 11 ? 0 : segundaAutenticacao
-            if (primeiraAutenticacao === splitCPF[9] && segundaAutenticacao === splitCPF[10]) {
-                return replace
-            } else {
-                throw new Error(`Os dígitos retornados são ${primeiraAutenticacao}${segundaAutenticacao}. o CPF é inválido!`);
+  static autenticacaoEmail(email) {
+    const mail = /\S+@\S+\.\S+/;
+    mail.test(email);
+    return email;
+  }
+  static autenticacaoSenha(senha) {
+    let retorno = false;
+    const letrasMaiusculas = /[A-Z]/;
+    const letrasMinisculas = /[a-z]/;
 
-            }
+    const caracteresEspeciais = /[!|@|#|$|%|^|&|*|(|)|-|_]/;
+    if (senha.length < 8) {
+      return retorno;
+    } else {
+      let auxMa = 0;
+      let auxMin = 0;
 
+      let auxCEspeciais = 0;
+      for (let i = 0; i < senha.length; i++) {
+        if (letrasMaiusculas.test(senha[i])) {
+          auxMa++;
+        } else if (letrasMinisculas.test(senha[i])) {
+          auxMin++;
+        } else if (caracteresEspeciais.test(senha[i])) {
+          auxCEspeciais++;
         }
+      }
 
-    }
-    static autenticacaoNome(nome) {
-        if (nome.length < 8) {
-            throw new error('Campo nome deve ter ao menos 8 caracteres!');
-        } else {
-            return nome.toUpperCase()
+      if (auxMa > 0) {
+        if (auxMin > 0) {
+          if (auxCEspeciais > 0) {
+            retorno = true;
+          }
         }
+      }
+      return senha;
     }
-    static autenticacaoTelefone(telefone) {
-        if (telefone.length < 11) {
-            throw new Error('Campo telefone deve contar ao menos 11 digitos!');
-        } else {
-            return telefone
-        }
-    }
+  }
+  multiplicaEDivide(num, arr) {
+    const valuefNum = num.valueOf();
+    for (let i = 0; i < valuefNum; i++)
+      if (num < 2) {
+        break;
+      } else {
+        arr.push(splitCPF[i] * num--);
+      }
 
-    static autenticacaoEmail(email) {
-        const mail = /\S+@\S+\.\S+/
-        mail.test(email)
-        return email
-    }
-    static autenticacaoSenha(senha) {
-        let retorno = false
-        const letrasMaiusculas = /[A-Z]/
-        const letrasMinisculas = /[a-z]/
-
-        const caracteresEspeciais = /[!|@|#|$|%|^|&|*|(|)|-|_]/
-        if (senha.length < 8) {
-            return retorno
-        } else {
-            let auxMa = 0
-            let auxMin = 0
-
-            let auxCEspeciais = 0
-            for (let i = 0; i < senha.length; i++) {
-                if (letrasMaiusculas.test(senha[i])) {
-                    auxMa++
-                }
-                else if (letrasMinisculas.test(senha[i])) {
-                    auxMin++
-                }
-
-                else if (caracteresEspeciais.test(senha[i])) {
-                    auxCEspeciais++
-                }
-
-            }
-
-            if (auxMa > 0) {
-                if (auxMin > 0) {
-
-                    if (auxCEspeciais > 0) {
-                        retorno = true
-
-                    }
-
-                }
-            }
-            return senha
-        }
-    }
+    const soma = arr.reduce((total, vAtual) => total + vAtual);
+    const multiplicaDezERestOnze = ((soma * 10) % 11).toString();
+    multiplicaDezERestOnze === 10 || 11 ? 0 : multiplicaDezERestOnze;
+    return multiplicaDezERestOnze;
+  }
 }
 
 module.exports = Validacoes;
