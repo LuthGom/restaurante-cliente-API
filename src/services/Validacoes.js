@@ -13,11 +13,13 @@ class Validacoes {
 
       const verificacaoPrimeiroDigito = Validacoes.multiplicaEDivide(
         dez,
-        arrVeriricaDigitoUm
+        arrVeriricaDigitoUm,
+        splitCPF
       );
       const verificacaoSegundoDigito = Validacoes.multiplicaEDivide(
         onze,
-        arrVeriricaDigitoDois
+        arrVeriricaDigitoDois,
+        splitCPF
       );
 
       if (
@@ -85,16 +87,16 @@ class Validacoes {
       return senha;
     }
   }
-  multiplicaEDivide(num, arr) {
+  static multiplicaEDivide(num, arrVerificador, splitCpf) {
     const valuefNum = num.valueOf();
     for (let i = 0; i < valuefNum; i++)
       if (num < 2) {
         break;
       } else {
-        arr.push(splitCPF[i] * num--);
+        arrVerificador.push(splitCpf[i] * num--);
       }
 
-    const soma = arr.reduce((total, vAtual) => total + vAtual);
+    const soma = arrVerificador.reduce((total, vAtual) => total + vAtual);
     const multiplicaDezERestOnze = ((soma * 10) % 11).toString();
     multiplicaDezERestOnze === 10 || 11 ? 0 : multiplicaDezERestOnze;
     return multiplicaDezERestOnze;
