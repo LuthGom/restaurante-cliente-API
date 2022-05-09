@@ -4,33 +4,15 @@ const blacklist = require("../../redis/manipula-blacklist");
 class ClientesController {
   static async cadastrarCliente(req, res) {
     try {
-      const { cpf, nome, telefone, cep, endereco, cidade, uf, email, senha } =
-        req.body;
-      const novoCliente = new Cliente({
-        cpf,
-        nome,
-        telefone,
-        cep,
-        endereco,
-        cidade,
-        uf,
-        email,
-      });
-      await novoCliente.adicionaSenha(senha);
+      const body = req.body;
+      const novoCliente = new Cliente({ ...body });
+      await novoCliente.adicionaSenha(body.senha);
       await novoCliente.cadastrarCliente();
-      return res.status(200).json({
-        novoCliente: {
-          cpf,
-          nome,
-          telefone,
-          cep,
-          endereco,
-          cidade,
-          uf,
-          email,
-        },
-      });
+      return res
+        .status(200)
+        .json({ novoCliente: Cliente.retornoRequisicoes(novoCliente) });
     } catch (error) {
+      console.log(error);
       res.status(400).json({
         message: error.message,
         error: true,
@@ -42,17 +24,7 @@ class ClientesController {
     try {
       const resposta = await Cliente.listaTodosOsClientes();
       const cliente = resposta.clientes.map((cliente) => {
-        return {
-          id: cliente.id,
-          cpf: cliente.cpf,
-          email: cliente.email,
-          nome: cliente.nome,
-          telefone: cliente.telefone,
-          cep: cliente.cep,
-          endereco: cliente.endereco,
-          cidade: cliente.cidade,
-          uf: cliente.uf,
-        };
+        return Cliente.retornoRequisicoes(cliente);
       });
       res.status(200).json({ clientes: cliente });
     } catch (error) {
@@ -68,17 +40,7 @@ class ClientesController {
     try {
       const resposta = await Cliente.listarClientePorId(id);
       const cliente = resposta.requisicao.map((cliente) => {
-        return {
-          id: cliente.id,
-          cpf: cliente.cpf,
-          email: cliente.email,
-          nome: cliente.nome,
-          telefone: cliente.telefone,
-          cep: cliente.cep,
-          endereco: cliente.endereco,
-          cidade: cliente.cidade,
-          uf: cliente.uf,
-        };
+        return Cliente.retornoRequisicoes(cliente);
       });
       res.status(200).json({ cliente: cliente });
     } catch (error) {
@@ -108,28 +70,20 @@ class ClientesController {
   static async atualizarCliente(req, res) {
     try {
       const cpf = req.params.cpf;
-      const body = req.body;
-      const clienteAntigo = await Cliente.buscaPorCpf(cpf);
-      // const novaSenhaHashed = await bcrypt.hash(req.body.senha, 12);
+      const clienteAtualizado = req.body;
+      const dadosAntigos = await Cliente.buscaPorCpf(cpf);
 
-      if (body.senhaHash && body.senhaHash !== undefined) {
-        body.senhaHash = await Cliente.gerarSenhaHash(body.senhaHash);
-      }
-      if (clienteAntigo) {
-        const clienteAtualizado = new Cliente({
-          cpf: body.cpf || clienteAntigo.cpf,
-          nome: body.nome || clienteAntigo.nome,
-          telefone: body.telefone || clienteAntigo.telefone,
-          cep: body.cep || clienteAntigo.cep,
-          endereco: body.endereco || clienteAntigo.endereco,
-          cidade: body.cidade || clienteAntigo.cidade,
-          uf: body.uf || clienteAntigo.uf,
-          email: body.email || clienteAntigo.email,
-          senhaHash: body.senhaHash || clienteAntigo.senhaHash,
-        });
-
-        const resposta = await Cliente.atualizarCliente(cpf, clienteAtualizado);
-        res.status(200).json({ clienteAtualizado: clienteAtualizado });
+      if (dadosAntigos) {
+        await Cliente.atualizarCliente(cpf, dadosAntigos, clienteAtualizado);
+        const clienteComDadostualizados = await Cliente.buscaPorCpf(cpf);
+        console.log(clienteComDadostualizados);
+        res
+          .status(200)
+          .json({
+            clienteAtualizado: Cliente.retornoRequisicoes(
+              clienteComDadostualizados
+            ),
+          });
       } else {
         res.json({
           mensagem: `Cliente com cpf ${cpf} não encontrado`,
@@ -137,7 +91,8 @@ class ClientesController {
         });
       }
     } catch (error) {
-      res.json({
+      console.log(error);
+      res.status(401).json({
         mensagem: error.message,
         error: true,
       });
