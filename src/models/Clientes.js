@@ -54,9 +54,28 @@ class NovoCliente {
     }
     return cliente;
   }
-  static async atualizarCliente(cpf, cliente) {
+  static async atualizarCliente(cpf, dadosAntigos, dadosAtualizados) {
     if (await NovoCliente.buscaPorCpf(cpf)) {
-      await ClientesDAO.atualizarCliente(cpf, cliente);
+      const clienteAtualizado = new NovoCliente({
+        cpf: dadosAtualizados.cpf || dadosAntigos.cpf,
+        nome: dadosAtualizados.nome || dadosAntigos.nome,
+        telefone: dadosAtualizados.telefone || dadosAntigos.telefone,
+        cep: dadosAtualizados.cep || dadosAntigos.cep,
+        endereco: dadosAtualizados.endereco || dadosAntigos.endereco,
+        cidade: dadosAtualizados.cidade || dadosAntigos.cidade,
+        uf: dadosAtualizados.uf || dadosAntigos.uf,
+        email: dadosAtualizados.email || dadosAntigos.email,
+        senhaHash: dadosAtualizados.senhaHash || dadosAntigos.senhaHash,
+      });
+      if (
+        clienteAtualizado.senhaHash &&
+        clienteAtualizado.senhaHash !== undefined
+      ) {
+        clienteAtualizado.senhaHash = await NovoCliente.gerarSenhaHash(
+          clienteAtualizado.senhaHash
+        );
+      }
+      await ClientesDAO.atualizarCliente(cpf, clienteAtualizado);
     } else {
       throw new Error(`O cliente de cpf ${this.cpf} não está cadastrado!`);
     }
@@ -98,6 +117,19 @@ class NovoCliente {
 
   autenticacaoEmail() {
     Validacoes.autenticacaoEmail(this.email);
+  }
+  static retornoRequisicoes(cliente) {
+    return {
+      id: cliente.id,
+      cpf: cliente.cpf,
+      email: cliente.email,
+      nome: cliente.nome,
+      telefone: cliente.telefone,
+      cep: cliente.cep,
+      endereco: cliente.endereco,
+      cidade: cliente.cidade,
+      uf: cliente.uf,
+    };
   }
 }
 
