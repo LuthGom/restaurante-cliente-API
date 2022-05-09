@@ -12,7 +12,6 @@ class ClientesController {
         .status(200)
         .json({ novoCliente: Cliente.retornoRequisicoes(novoCliente) });
     } catch (error) {
-      console.log(error);
       res.status(400).json({
         message: error.message,
         error: true,
@@ -76,7 +75,6 @@ class ClientesController {
       if (dadosAntigos) {
         await Cliente.atualizarCliente(cpf, dadosAntigos, clienteAtualizado);
         const clienteComDadostualizados = await Cliente.buscaPorCpf(cpf);
-        console.log(clienteComDadostualizados);
         res.status(200).json({
           clienteAtualizado: Cliente.retornoRequisicoes(
             clienteComDadostualizados
@@ -89,7 +87,6 @@ class ClientesController {
         });
       }
     } catch (error) {
-      console.log(error);
       res.status(401).json({
         mensagem: error.message,
         error: true,
