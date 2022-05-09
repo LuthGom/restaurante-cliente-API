@@ -77,13 +77,11 @@ class ClientesController {
         await Cliente.atualizarCliente(cpf, dadosAntigos, clienteAtualizado);
         const clienteComDadostualizados = await Cliente.buscaPorCpf(cpf);
         console.log(clienteComDadostualizados);
-        res
-          .status(200)
-          .json({
-            clienteAtualizado: Cliente.retornoRequisicoes(
-              clienteComDadostualizados
-            ),
-          });
+        res.status(200).json({
+          clienteAtualizado: Cliente.retornoRequisicoes(
+            clienteComDadostualizados
+          ),
+        });
       } else {
         res.json({
           mensagem: `Cliente com cpf ${cpf} não encontrado`,
@@ -102,7 +100,7 @@ class ClientesController {
   static async deletarCliente(req, res) {
     try {
       const cpf = req.params.cpf;
-      const resposta = await Cliente.deletarCliente(cpf);
+      await Cliente.deletarCliente(cpf);
       res.status(200).json({
         resposta: `Cliente de cpf ${cpf} deletado!`,
         erro: false,
