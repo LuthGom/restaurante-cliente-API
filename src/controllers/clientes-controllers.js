@@ -81,7 +81,7 @@ class ClientesController {
           ),
         });
       } else {
-        res.json({
+        res.status(404).json({
           mensagem: `Cliente com cpf ${cpf} não encontrado`,
           error: true,
         });
