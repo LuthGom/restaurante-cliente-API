@@ -1,7 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const BearerStrategy = require('passport-http-bearer');
-const { verify, JsonWebTokenError } = require('jsonwebtoken');
+const { verify } = require('jsonwebtoken');
 const Cliente = require('../models/Clientes');
 const { compare } = require('bcrypt')
 const blacklist = require('../../redis/manipula-blacklist');
