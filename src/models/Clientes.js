@@ -67,6 +67,9 @@ class NovoCliente {
         email: dadosAtualizados.email || dadosAntigos.email,
         senhaHash: dadosAtualizados.senhaHash || dadosAntigos.senhaHash,
       });
+      if(await NovoCliente.buscaPorEmail(clienteAtualizado.email)) {
+        throw new Error("Email já cadastrado!")
+      }
       if (
         clienteAtualizado.senhaHash &&
         clienteAtualizado.senhaHash !== undefined
