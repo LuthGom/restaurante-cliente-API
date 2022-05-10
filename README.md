@@ -93,14 +93,14 @@ e rode o seguinte comando no terminal:</li>
 
 ```json
 {
-  "cpf": "13601542056",
-  "nome": "João do Teste",
+  "cpf": "01743489080",
+  "nome": "José do Teste",
   "telefone": 12345678911,
   "cep": 13245678,
-  "endereco": "Rua do Teste",
+  "endereco": "Rua do Teste, 390, QD-B",
   "cidade": "TesteCity",
   "uf": "ET",
-  "email": "exemplo@email.com",
+  "email": "teste@email.com",
   "senha": "Teste@te"
 }
 ```
