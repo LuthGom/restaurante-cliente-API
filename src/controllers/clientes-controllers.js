@@ -87,7 +87,7 @@ class ClientesController {
         });
       }
     } catch (error) {
-      res.status(401).json({
+      res.status(404).json({
         mensagem: error.message,
         error: true,
       });
