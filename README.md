@@ -3,7 +3,8 @@
 </p>
 
 ## Descrição:
-<p>A presente aplicação é uma funcionalidade back-end que gera e administra, de forma mais fácil, o cadastro de clientes com foco em entrega de produtos de resturante(delivery), entretanto, a aplicação foi criada de forma de possa ser utilizada, e adaptada, para cadastro de clientes de qualquer serviço oferecido. Para o programa, o banco de dados relacionais SQLite foi usado, assim como os verbos HTTP e o padrão REST, além da arquitetura MVC, de forma a estruturar coerentemente as operações do método CRUD. Além disso, a API conta com autenticação de login por tokens, utilizando a lib jsonwebtoken e outras dependências para estratégias de autenticação local e bearer. 
+
+<p>A presente aplicação é uma funcionalidade back-end que gera e administra, de forma mais fácil, o cadastro de clientes com foco em entrega de produtos de resturante(delivery), entretanto, a aplicação foi criada de forma de possa ser utilizada, e adaptada, para cadastro de clientes de qualquer serviço oferecido. Para o programa, o banco de dados relacionais SQLite foi usado, assim como os verbos HTTP e o padrão REST, além da arquitetura MVC, de forma a estruturar coerentemente as operações do método CRUD. Além disso, a API conta com autenticação de login por tokens, utilizando a lib jsonwebtoken e outras dependências para estratégias de autenticação local e bearer.
 
 Considerando a forma como a lógica de autenticação por tokens foi implementada, utilizando redis para desenvolvimento local, pelo menos por enquanto, para que a API rode localmente de forma impecável, é preciso ter o redis rodando em sua máquina.
 
@@ -11,9 +12,8 @@ Instruções de instação disponível em:
 [redis.io](https://redis.io/docs/getting-started/installation/install-redis-on-linux/)
 
 Caso o sistema operacional seja Windows, recomendo fortemente e leitura do blog para tal: [redis.com](https://redis.com/blog/redis-on-windows-10/)
-   
-Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de Dev. Web FullStack da <a href="https://www.resilia.com.br">Resilia Educação.</a></p>
 
+Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de Dev. Web FullStack da <a href="https://www.resilia.com.br">Resilia Educação.</a></p>
 
 ## Status do Projeto
 
@@ -25,6 +25,7 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 <strong>Observação</strong> é recomendável a utilização de um editor de código que tenha familiaridade, caso não tenha com nenhum, recomenda-se o <a href="https://code.visualstudio.com/download">VsCode</a> pela intuitividade do mecanismo.
 
 # Dependências:
+
 ![Badge](https://img.shields.io/badge/"bcrypt"-"%5E5.0.1"-red)<br>
 ![Badge](https://img.shields.io/badge/"cors"-"%5E2.8.5"-orange)<br>
 ![Badge](https://img.shields.io/badge/"dotenv"-"%5E16.0.0"-yellow)<br>
@@ -36,18 +37,15 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 ![Badge](https://img.shields.io/badge/"redis"-"%5E4.0.4"-black)<br>
 ![Badge](https://img.shields.io/badge/"sqlite3"-"%5E5.0.2"-roxy)<br>
 
-
-
 # Dependências de desenvolvimento:
+
 ![Badge](https://img.shields.io/badge/"jest"-"%5E27.4.7"-white)
 ![Badge](https://img.shields.io/badge/"nodemon"-"%5E2.0.15"-black)
 ![Badge](https://img.shields.io/badge/"supertest"-"%5E6.2.2"-white)
 
-
 </p>
 
 ## Iniciando passo a passo:
-
 
 <p>
 
@@ -63,8 +61,8 @@ e rode o seguinte comando no terminal:</li>
 <li> npm start</li>
 <li> O servidor iniciará na porta:3000 - acesse: http://localhost:3000/clientes</li>
 
-
 ## Atenção:
+
 <p>
 <ol>
  <li>É essencial salientar que a versão do NodeJs utilizada para desenvolvimento é a v16.13.0 x LTS, ou seja, é pertinente a instalação de versão igual ou superior para a impecável execução da mesma.</li>
@@ -76,47 +74,53 @@ e rode o seguinte comando no terminal:</li>
 
 ## Rotas da API:
 
+| Método     | Rota              | Descrição                                 |
+| ---------- | ----------------- | ----------------------------------------- |
+| **GET**    | `/clientes`       | Lista todas os clientes                   |
+| **GET**    | `/cliente/:id`    | Busca o cliente pelo {id}                 |
+| **GET**    | `/cliente/logout` | Realiza logout do cliente                 |
+| **POST**   | `/cliente`        | Cadastra um novo cliente                  |
+| **POST**   | `/cliente/login`  | Autenticação de login do cliente          |
+| **PATCH**  | `/cliente/:id`    | Atualiza o cadastro do cliente pelo {cpf} |
+| **DELETE** | `/cliete/:cpf`    | Deleta o cadastro do cliente pelo {cpf}   |
 
-| Método | Rota | Descrição |
-| ------ | ---- | --------- |
-| **GET** | `/clientes` | Lista todas os clientes |
-| **GET** | `/cliente/:id` | Busca o cliente pelo {id} |
-| **GET** | `/cliente/logout` | Realiza logout do cliente |
-| **POST** | `/cliente` | Cadastra um novo cliente  |
-| **POST** | `/cliente/login` | Autenticação de login do cliente  |
-| **PATCH** | `/cliente/:id` | Atualiza o cadastro do cliente pelo {cpf} |
-| **DELETE** | `/cliete/:cpf` | Deleta o cadastro do cliente pelo {cpf} |
 </p>
 
-
 ### CAMPOS NECESSÁRIOS PARA CADASTRO DE UM CLIENTE:
- 
-```json 
- {
 
-   
-    "cpf": "string",
-    "nome": "string",
-    "telefone": "string",
-    "cep": "string",
-    "endereco": "string",
-    "cidade": "string",
-    "uf": "string",
-    "email": "string",
-    "senha": "string"
+#### OBS: os campos CPF, nome, telefone e senha possuem validações. Confira abaixo.
 
+```json
+{
+  "cpf": "13601542056",
+  "nome": "João do Teste",
+  "telefone": 12345678911,
+  "cep": 13245678,
+  "endereco": "Rua do Teste",
+  "cidade": "TesteCity",
+  "uf": "ET",
+  "email": "exemplo@email.com",
+  "senha": "Teste@te"
 }
 ```
 
+#### CPF: algoritmo de validação da receita federal. Recomenda-se o site [Gerador de CPFs - 4Devs](https://www.4devs.com.br/gerador_de_cpf) para utilizar um cpf que atinga da validação.
+
+#### Nome: Pelo menos 8 caracteres.
+
+#### Email: formato: exemplo@email.com
+
+#### Senha: Pelo menos 1 letra maiúscula, pelo menos 1 minúscula e pelo menos 1 caracter especial. No mínimo 8 caracteres.
 
 ### COMO REALIZAR O LOGIN:
 
 ```json
 {
-    "email": "email cdastrado",
-    "senha": "senha cadastrada"
+  "email": "email cdastrado",
+  "senha": "senha cadastrada"
 }
 ```
+
 ### o login gerará um token, que vai ser requisitado para realizar outras ações, como logout, delete e ações futuras relaciodas a outras entidades que podem ser adicionadas e relacionadas ao cliente.
 
 ### COMO PEGAR E UTILIZAR O TOKEN GERADO PELO LOGIN:
@@ -132,12 +136,12 @@ e rode o seguinte comando no terminal:</li>
 }
 ```
 
-
 ## Autor 🌈
 
 <img src="./midia/luth.jpeg" alt="Foto do autor, Luciano Mendes pardo, de cabelos chacheados e está de olhos fechados enconstado numa porta. Luciano está utilizando uma regata de crochê, baseada em granny squares, nas cores pretas, verde, roxo, azul, laranja, cinza e amarelo" width = 200px heigth= 200px>
 
 <a href="https://www.linkedin.com/in/dev-luciano-mendes/">Luciano Mendes(Luth🌈) | Clique aqui para o meu Linkedin<a/>
+
 <p>Um ex quase professor de Química!
 Depois de 3 anos cursando a Licenciatura, abandonei a graduação antes que entrasse em moldes sociais rígidos
 e perdesse o viés educacional presente em mim!</p>
