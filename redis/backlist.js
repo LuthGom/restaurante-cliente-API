@@ -1,8 +1,10 @@
+const { createClient } = require("redis");
 
-const redis = require("redis");
-
-let blacklist;
-blacklist = redis.createClient(6379, "127.0.0.1", { prefix: "blacklist:" });
+// let blacklist;
+const blacklist = createClient({
+  url: "redis://redis-15941.c258.us-east-1-4.ec2.cloud.redislabs.com:15941",
+  password: "cOH8sucMdVQLWBQXOBq6nx9BwsBp6xUL"
+});
 blacklist.on("connect", () => console.log("Connected to Redis!"));
 blacklist.on("error", (err) => console.log("Redis Client Error", err));
 blacklist.connect();
