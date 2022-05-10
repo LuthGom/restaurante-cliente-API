@@ -89,6 +89,7 @@ e rode o seguinte comando no terminal:</li>
 ### CAMPOS NECESSÁRIOS PARA CADASTRO DE UM CLIENTE:
 
 #### OBS: os campos CPF, nome, telefone e senha possuem validações. Confira abaixo.
+#### Utiliza o body de exemplo abaixo para teste, se desejar.
 
 ```json
 {
