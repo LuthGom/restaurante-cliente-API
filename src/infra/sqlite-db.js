@@ -32,9 +32,9 @@ db.serialize(() => {
 
 
 })
-process.on('SIGINT', () =>
-    db.close(() => {
-        process.exit(0);
-    })
-)
+// process.on('SIGINT', () =>
+//     db.close(() => {
+//         process.exit(0);
+//     })
+// )
 module.exports = db;
