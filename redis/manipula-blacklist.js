@@ -1,4 +1,4 @@
-const blacklist = require('./backlist');
+const blacklist = require('./blacklist');
 
 const { decode } = require('jsonwebtoken');
 const { createHash } = require('crypto');
