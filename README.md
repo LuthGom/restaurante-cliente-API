@@ -8,7 +8,7 @@
 
 Considerando a forma como a lógica de autenticação por tokens foi implementada, utilizando redis para desenvolvimento local, pelo menos por enquanto, para que a API rode localmente de forma impecável, é preciso ter o redis rodando em sua máquina.
 
-Instruções de instação disponível em:
+Instruções de instaLAção disponível em:
 [redis.io](https://redis.io/docs/getting-started/installation/install-redis-on-linux/)
 
 Caso o sistema operacional seja Windows, recomendo fortemente e leitura do blog para tal: [redis.com](https://redis.com/blog/redis-on-windows-10/)
@@ -24,6 +24,16 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 <p>Atenção nesta parte, pois para utilizar esta Api você precisará instalar algumas ferramentas fundamentais na sua máquina, como: <a href="https://www.gitkraken.com/download?utm_term=git&utm_campaign=1+%7C+1+GK+Git+GUI+-+Search&utm_source=adwords&utm_medium=ppc&hsa_acc=1130375851&hsa_cam=393455543&hsa_grp=23981425823&hsa_ad=550570964612&hsa_src=g&hsa_tgt=kwd-247385313&hsa_kw=git&hsa_mt=e&hsa_net=adwords&hsa_ver=3&gclid=Cj0KCQiA-qGNBhD3ARIsAO_o7ym_H2X6ZGqwCZJqFF5FFzq4fVkZ1h6JujQY4yk9UI5bf2cnWf-Ez-EaAstwEALw_wcB">Git</a> e o JavaScript com <a href="https://nodejs.org/en/download/">NodeJS</a>, além do gerenciador de pacotes npm e a framework express. 
 <strong>Observação</strong> é recomendável a utilização de um editor de código que tenha familiaridade, caso não tenha com nenhum, recomenda-se o <a href="https://code.visualstudio.com/download">VsCode</a> pela intuitividade do mecanismo.
 
+## Algumas variáveis de dependência que precisam ser declaradas para o funcionamento adequado do projeto:
+
+## Chave para o Json Web Tokemn
+
+### CHAVE_JWT
+ 
+## Conexão com o Redis
+### REDIS_URL
+### REDIS_PASSOWORD
+ 
 # Dependências:
 
 ![Badge](https://img.shields.io/badge/"bcrypt"-"%5E5.0.1"-red)<br>
