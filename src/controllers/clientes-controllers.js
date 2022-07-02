@@ -1,6 +1,8 @@
 const Cliente = require("../models/Clientes");
 const criaTokenJWT = require("../services/Autenticacao");
 const blacklist = require("../../redis/manipula-blacklist");
+const { verify } = require("jsonwebtoken");
+
 class ClientesController {
   static async cadastrarCliente(req, res) {
     try {
@@ -68,21 +70,25 @@ class ClientesController {
 
   static async atualizarCliente(req, res) {
     try {
+      const token = req.token;
+      const payload = verify(token, process.env.CHAVE_JWT);
       const cpf = req.params.cpf;
-      const clienteAtualizado = req.body;
-      const dadosAntigos = await Cliente.buscaPorCpf(cpf);
+      if (payload.cpf === cpf) {
+        const clienteAtualizado = req.body;
+        const dadosAntigos = await Cliente.buscaPorCpf(cpf);
 
-      if (dadosAntigos) {
-        await Cliente.atualizarCliente(cpf, dadosAntigos, clienteAtualizado);
-        const clienteComDadostualizados = await Cliente.buscaPorCpf(cpf);
-        res.status(200).json({
-          clienteAtualizado: Cliente.retornoRequisicoes(
-            clienteComDadostualizados
-          ),
-        });
+        if (dadosAntigos) {
+          await Cliente.atualizarCliente(cpf, dadosAntigos, clienteAtualizado);
+          const clienteComDadostualizados = await Cliente.buscaPorCpf(cpf);
+          res.status(200).json({
+            clienteAtualizado: Cliente.retornoRequisicoes(
+              clienteComDadostualizados
+            ),
+          });
+        }
       } else {
         res.status(404).json({
-          mensagem: `Cliente com cpf ${cpf} não encontrado`,
+          mensagem: `Cpf incorreto!`,
           error: true,
         });
       }
@@ -96,12 +102,21 @@ class ClientesController {
 
   static async deletarCliente(req, res) {
     try {
+      const token = req.token;
+      const payload = verify(token, process.env.CHAVE_JWT);
       const cpf = req.params.cpf;
-      await Cliente.deletarCliente(cpf);
-      res.status(200).json({
-        resposta: `Cliente de cpf ${cpf} deletado!`,
-        erro: false,
-      });
+      if (payload.cpf === cpf) {
+        await Cliente.deletarCliente(cpf);
+        res.status(200).json({
+          resposta: `Cliente de cpf ${cpf} deletado!`,
+          erro: false,
+        });
+      } else {
+        return res.satus(404).json({
+          mensagem: "O cpf digitado não está cadastrado!",
+          erro: true,
+        });
+      }
     } catch (error) {
       res.status(404).json({
         mensagem: error.message,
