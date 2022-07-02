@@ -67,7 +67,7 @@ class NovoCliente {
         email: dadosAtualizados.email || dadosAntigos.email,
         senhaHash: dadosAtualizados.senhaHash || dadosAntigos.senhaHash,
       });
-      if(await NovoCliente.buscaPorEmail(clienteAtualizado.email)) {
+      if( await NovoCliente.buscaPorEmail(clienteAtualizado.email) === dadosAntigos.email && await NovoCliente.buscaPorEmail(clienteAtualizado.email)) {
         throw new Error("Email já cadastrado!")
       }
       if (
