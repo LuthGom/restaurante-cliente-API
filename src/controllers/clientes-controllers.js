@@ -30,7 +30,7 @@ class ClientesController {
       res.status(200).json({ clientes: cliente });
     } catch (error) {
       res.status(400).json({
-        message: error.message,
+        message: error,
         error: true,
       });
     }
