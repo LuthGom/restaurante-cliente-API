@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/LuthGom/restaurante-cliente-API#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
@@ -28,7 +29,8 @@
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
     "pg": "^8.7.3",
-    "redis": "^4.0.4"
+    "redis": "^4.0.4",
+    "swagger-ui-express": "^4.4.0"
   },
   "engines": {
     "node": "16.*"
