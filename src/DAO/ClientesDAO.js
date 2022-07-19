@@ -17,13 +17,11 @@ class ClientesDAO {
         ],
         (err, res) => {
           if (err) {
-            console.log("err", err);
             reject({
               mensagem: err.message,
               erro: true,
             });
           }
-          console.log(res.rows);
           return resolve(res.rows);
         }
       );

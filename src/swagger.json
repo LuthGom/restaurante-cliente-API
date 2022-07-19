@@ -1,0 +1,281 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de cadastro e gerenciamento de clientes",
+    "description": "Esta API tem por objetivo controlar cadastro de novos clientes e gerenciar cadastros já existentes.",
+    "termsOfService": "http://localhost:3000/terms",
+    "contact": { "email": "email@teste.com" },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "API de test"
+    },
+    {
+      "url": "http://www.codedrops.com",
+      "description": "API de produção"
+    }
+  ],
+  "paths": {
+    "/cliente": {
+      "post": {
+        "sumary": "Cadastro de clientes",
+        "description": "Essa rota será responsável por cadastrar um novo cliente.",
+        "tags": ["Clients"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              },
+              "examples": {
+                "client": {
+                  "value": {
+                    "cpf": "97983830017",
+                    "nome": "João do Teste",
+                    "telefone": "12345678911",
+                    "cep": "01001000",
+                    "endereco": "Praça da Sé",
+                    "cidade": "São Paulo",
+                    "uf": "SP",
+                    "email": "email@mail.com",
+                    "senha": "Teste@se"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Client already exists!"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cliente/login": {
+      "post": {
+        "description": "Rota de autenticação/login do usuário.",
+        "sumary": "Rota de autenticação/login do usuário.",
+        "tags": ["Clients"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientLogin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Client already exists!"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ClientLogin"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clientes": {
+      "get": {
+        "description": "Listagem de todos os clientes.",
+        "sumary": "Listagem de todos os clientes.",
+        "tags": ["Clients"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cliente/{id}": {
+      "get": {
+        "description": "Busca de cliente pelo id",
+        "sumary": "Busca de um cliente pelo id",
+        "tags": ["Clients"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Nome do cliente para busca pelo id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cliente/{cpf}": {
+      "patch": {
+        "description": "Alterar o cadastro do cliente pelo cpf.",
+        "summary": "Alterar o cadastro do cliente pelo cpf.",
+        "tags": ["Clients"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "description": "Alterar o cadastro do cliente pelo cpf."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              },
+              "examples": {
+                "client": {
+                  "value": {
+                    "cpf": "97983830017",
+                    "nome": "João Testando",
+                    "telefone": "12345678911",
+                    "cep": "01001000",
+                    "email": "email@mail.com",
+                    "senha": "Teste@se"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletar um cliente cadastrado pelo cpf",
+        "summary": "Alterar o cadastro do cliente pelo cpf.",
+        "tags": ["Clients"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "description": "Alterar o cadastro do cliente pelo cpf."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Client": {
+        "type": "object",
+        "properties": {
+          "cpf": {
+            "type": "string"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "telefone": {
+            "type": "string"
+          },
+          "cep": {
+            "type": "string"
+          },
+          "endereco": {
+            "type": "string"
+          },
+          "cidade": {
+            "type": "string"
+          },
+          "uf": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "senha": {
+            "type": "string"
+          }
+        }
+      },
+      "ClientLogin": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "senha": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
