@@ -9,10 +9,23 @@ class ClientesController {
       const body = req.body;
       const novoCliente = new Cliente({ ...body });
       await novoCliente.adicionaSenha(body.senha);
+
       await novoCliente.cadastrarCliente();
-      return res
-        .status(200)
-        .json({ novoCliente: Cliente.retornoRequisicoes(novoCliente) });
+      return res.status(200).json({
+        novoCliente: [
+          {
+            id: novoCliente.id,
+            cpf: novoCliente.cpf,
+            email: novoCliente.email,
+            nome: novoCliente.nome,
+            telefone: novoCliente.telefone,
+            cep: novoCliente.cep,
+            endereco: novoCliente.endereco,
+            cidade: novoCliente.cidade,
+            uf: novoCliente.uf,
+          },
+        ],
+      });
     } catch (error) {
       res.status(400).json({
         message: error.message,
@@ -25,7 +38,17 @@ class ClientesController {
     try {
       const resposta = await Cliente.listaTodosOsClientes();
       const cliente = resposta.clientes.map((cliente) => {
-        return Cliente.retornoRequisicoes(cliente);
+        return {
+          id: cliente.id,
+          cpf: cliente.cpf,
+          email: cliente.email,
+          nome: cliente.nome,
+          telefone: cliente.telefone,
+          cep: cliente.cep,
+          endereco: cliente.endereco,
+          cidade: cliente.cidade,
+          uf: cliente.uf,
+        };
       });
       res.status(200).json({ clientes: cliente });
     } catch (error) {
@@ -40,10 +63,18 @@ class ClientesController {
     const id = req.params.id;
     try {
       const resposta = await Cliente.listarClientePorId(id);
-      const cliente = resposta.requisicao.map((cliente) => {
-        return Cliente.retornoRequisicoes(cliente);
-      });
-      res.status(200).json({ cliente: cliente });
+      const cliente = {
+        id: resposta.requisicao.id,
+        cpf: resposta.requisicao.cpf,
+        email: resposta.requisicao.email,
+        nome: resposta.requisicao.nome,
+        telefone: resposta.requisicao.telefone,
+        cep: resposta.requisicao.cep,
+        endereco: resposta.requisicao.endereco,
+        cidade: resposta.requisicao.cidade,
+        uf: resposta.requisicao.uf,
+      };
+      return res.status(200).json({ cliente: cliente });
     } catch (error) {
       res.status(400).json({
         message: error.message,
@@ -81,9 +112,17 @@ class ClientesController {
           await Cliente.atualizarCliente(cpf, dadosAntigos, clienteAtualizado);
           const clienteComDadostualizados = await Cliente.buscaPorCpf(cpf);
           res.status(200).json({
-            clienteAtualizado: Cliente.retornoRequisicoes(
-              clienteComDadostualizados
-            ),
+            clienteAtualizado: {
+              id: clienteComDadostualizados.id,
+              cpf: clienteComDadostualizados.cpf,
+              email: clienteComDadostualizados.email,
+              nome: clienteComDadostualizados.nome,
+              telefone: clienteComDadostualizados.telefone,
+              cep: clienteComDadostualizados.cep,
+              endereco: clienteComDadostualizados.endereco,
+              cidade: clienteComDadostualizados.cidade,
+              uf: clienteComDadostualizados.uf,
+            },
           });
         }
       } else {
