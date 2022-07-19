@@ -17,12 +17,14 @@ class ClientesDAO {
         ],
         (err, res) => {
           if (err) {
+            console.log("err", err);
             reject({
               mensagem: err.message,
               erro: true,
             });
           }
-          return resolve(res.rows[0]);
+          console.log(res.rows);
+          return resolve(res.rows);
         }
       );
     });
@@ -45,9 +47,9 @@ class ClientesDAO {
     });
   }
   static listarClientePorId(id) {
-    const SELECT_BY_ID = `SELECT * FROM "CLIENTES" WHERE ID = ?`;
+    const SELECT_BY_ID = `SELECT * FROM "CLIENTES" WHERE "id" = $1`;
     return new Promise((resolve, reject) => {
-      db.query(SELECT_BY_ID, id, (err, res) => {
+      db.query(SELECT_BY_ID, [id], (err, res) => {
         if (err) {
           reject({
             mensagem: err.message,

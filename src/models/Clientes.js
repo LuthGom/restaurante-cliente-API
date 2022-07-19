@@ -3,6 +3,7 @@
 const ClientesDAO = require("../DAO/ClientesDAO");
 const Validacoes = require("../services/Validacoes");
 const bcrypt = require("bcrypt");
+const { default: axios } = require("axios");
 
 class NovoCliente {
   constructor(novoCliente) {
@@ -30,11 +31,11 @@ class NovoCliente {
       `O cliente de cpf ${this.cpf} e email ${this.email} já está cadastrado!`
     );
   }
-  static listaTodosOsClientes() {
-    return ClientesDAO.listarTodosOsClientes();
+  static async listaTodosOsClientes() {
+    return await ClientesDAO.listarTodosOsClientes();
   }
-  static listarClientePorId(id) {
-    const cliente = ClientesDAO.listarClientePorId(id);
+  static async listarClientePorId(id) {
+    const cliente = await ClientesDAO.listarClientePorId(id);
     if (!cliente) {
       throw new Error("Cliente não cadastrado!");
     }
@@ -67,8 +68,12 @@ class NovoCliente {
         email: dadosAtualizados.email || dadosAntigos.email,
         senhaHash: dadosAtualizados.senhaHash || dadosAntigos.senhaHash,
       });
-      if( await NovoCliente.buscaPorEmail(clienteAtualizado.email) === dadosAntigos.email && await NovoCliente.buscaPorEmail(clienteAtualizado.email)) {
-        throw new Error("Email já cadastrado!")
+      if (
+        (await NovoCliente.buscaPorEmail(clienteAtualizado.email)) ===
+          dadosAntigos.email &&
+        (await NovoCliente.buscaPorEmail(clienteAtualizado.email))
+      ) {
+        throw new Error("Email já cadastrado!");
       }
       if (
         clienteAtualizado.senhaHash &&
@@ -121,7 +126,15 @@ class NovoCliente {
   autenticacaoEmail() {
     Validacoes.autenticacaoEmail(this.email);
   }
-  static retornoRequisicoes(cliente) {
+  static async retornoRequisicoes(cliente) {
+    const {
+      data,
+    } = async (cep) => await axios(`https://viacep.com.br/ws/${cep}/json/`);
+    if (data) {
+    } else {
+      throw new Error("Cep inválido!");
+    }
+
     return {
       id: cliente.id,
       cpf: cliente.cpf,
@@ -129,11 +142,13 @@ class NovoCliente {
       nome: cliente.nome,
       telefone: cliente.telefone,
       cep: cliente.cep,
-      endereco: cliente.endereco,
-      cidade: cliente.cidade,
-      uf: cliente.uf,
+
     };
   }
+
+  // static async viaCep(cep) {
+
+  // }
 }
 
 module.exports = NovoCliente;
