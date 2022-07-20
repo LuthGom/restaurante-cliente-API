@@ -84,36 +84,9 @@ e rode o seguinte comando no terminal:</li>
 
 ## Rotas da API:
 
-| Método     | Rota              | Descrição                                 |
-| ---------- | ----------------- | ----------------------------------------- |
-| **GET**    | `/clientes`       | Lista todas os clientes                   |
-| **GET**    | `/cliente/:id`    | Busca o cliente pelo {id}                 |
-| **GET**    | `/cliente/logout` | Realiza logout do cliente                 |
-| **POST**   | `/cliente`        | Cadastra um novo cliente                  |
-| **POST**   | `/cliente/login`  | Autenticação de login do cliente          |
-| **PATCH**  | `/cliente/:id`    | Atualiza o cadastro do cliente pelo {cpf} |
-| **DELETE** | `/cliete/:cpf`    | Deleta o cadastro do cliente pelo {cpf}   |
+### Documentação Swagger: <a href="https://restaurant-client-api.herokuapp.com/docs/">Rotas</a>
 
-</p>
 
-### CAMPOS NECESSÁRIOS PARA CADASTRO DE UM CLIENTE:
-
-#### OBS: os campos CPF, nome, telefone e senha possuem validações. Confira abaixo.
-#### Utiliza o body de exemplo abaixo para teste, se desejar.
-
-```json
-{
-  "cpf": "01743489080",
-  "nome": "José do Teste",
-  "telefone": 12345678911,
-  "cep": 13245678,
-  "endereco": "Rua do Teste, 390, QD-B",
-  "cidade": "TesteCity",
-  "uf": "ET",
-  "email": "teste@email.com",
-  "senha": "Teste@te"
-}
-```
 
 #### CPF: algoritmo de validação da receita federal. Recomenda-se o site [Gerador de CPFs - 4Devs](https://www.4devs.com.br/gerador_de_cpf) para utilizar um cpf que atinga da validação.
 
@@ -123,14 +96,7 @@ e rode o seguinte comando no terminal:</li>
 
 #### Senha: Pelo menos 1 letra maiúscula, pelo menos 1 minúscula e pelo menos 1 caracter especial. No mínimo 8 caracteres.
 
-### COMO REALIZAR O LOGIN:
 
-```json
-{
-  "email": "email cdastrado",
-  "senha": "senha cadastrada"
-}
-```
 
 ### o login gerará um token, que vai ser requisitado para realizar outras ações, como logout, delete e ações futuras relaciodas a outras entidades que podem ser adicionadas e relacionadas ao cliente.
 
@@ -138,14 +104,6 @@ e rode o seguinte comando no terminal:</li>
 
 <img src="./midia/ilustracao-login.gif" />
 
-### COMO ATUALIZAR UM CLIENTE:
-
-```json
-{
-    exemplo:
-    "email": "novo email"
-}
-```
 
 ## Autor 🌈
 
