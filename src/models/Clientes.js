@@ -126,29 +126,6 @@ class NovoCliente {
   autenticacaoEmail() {
     Validacoes.autenticacaoEmail(this.email);
   }
-  static async retornoRequisicoes(cliente) {
-    const {
-      data,
-    } = async (cep) => await axios(`https://viacep.com.br/ws/${cep}/json/`);
-    if (data) {
-    } else {
-      throw new Error("Cep inválido!");
-    }
-
-    return {
-      id: cliente.id,
-      cpf: cliente.cpf,
-      email: cliente.email,
-      nome: cliente.nome,
-      telefone: cliente.telefone,
-      cep: cliente.cep,
-
-    };
-  }
-
-  // static async viaCep(cep) {
-
-  // }
 }
 
 module.exports = NovoCliente;
