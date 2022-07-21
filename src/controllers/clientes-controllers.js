@@ -2,30 +2,40 @@ const Cliente = require("../models/Clientes");
 const criaTokenJWT = require("../services/Autenticacao");
 const blacklist = require("../../redis/manipula-blacklist");
 const { verify } = require("jsonwebtoken");
-
+const axios = require("axios").default;
 class ClientesController {
   static async cadastrarCliente(req, res) {
     try {
       const body = req.body;
       const novoCliente = new Cliente({ ...body });
       await novoCliente.adicionaSenha(body.senha);
-
-      await novoCliente.cadastrarCliente();
-      return res.status(200).json({
-        novoCliente: [
-          {
-            id: novoCliente.id,
-            cpf: novoCliente.cpf,
-            email: novoCliente.email,
-            nome: novoCliente.nome,
-            telefone: novoCliente.telefone,
-            cep: novoCliente.cep,
-            endereco: novoCliente.endereco,
-            cidade: novoCliente.cidade,
-            uf: novoCliente.uf,
-          },
-        ],
-      });
+      const viaCep = async (cep) => {
+        const { data } = await axios.get(
+          `https://viacep.com.br/ws/${cep}/json/`
+        );
+        return data;
+      };
+      const data = await viaCep(novoCliente.cep);
+      if (data) {
+        await novoCliente.cadastrarCliente();
+        return res.status(200).json({
+          novoCliente: [
+            {
+              id: novoCliente.id,
+              cpf: novoCliente.cpf,
+              email: novoCliente.email,
+              nome: novoCliente.nome,
+              telefone: novoCliente.telefone,
+              cep: novoCliente.cep,
+              endereco: `${data.logradouro}, ${data.bairro}, ${data.complemento}`,
+              cidade: data.localidade,
+              uf: novoCliente.uf,
+            },
+          ],
+        });
+      } else {
+        throw new Error("Cep não existe!");
+      }
     } catch (error) {
       res.status(400).json({
         message: error.message,
@@ -37,6 +47,7 @@ class ClientesController {
   static async listarTodosOsClientes(req, res) {
     try {
       const resposta = await Cliente.listaTodosOsClientes();
+
       const cliente = resposta.clientes.map((cliente) => {
         return {
           id: cliente.id,
