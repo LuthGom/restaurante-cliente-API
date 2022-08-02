@@ -198,7 +198,7 @@
       },
       "delete": {
         "description": "Deletar um cliente cadastrado pelo cpf",
-        "summary": "Alterar o cadastro do cliente pelo cpf.",
+        "summary": "Deleter o cadastro do cliente pelo cpf.",
         "tags": ["Clients"],
         "security": [{ "bearerAuth": [] }],
         "parameters": [
