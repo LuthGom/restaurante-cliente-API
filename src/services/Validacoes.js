@@ -103,4 +103,4 @@ class Validacoes {
   }
 }
 
-module.exports = Validacoes;
+export default Validacoes;

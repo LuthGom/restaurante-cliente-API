@@ -1,9 +1,6 @@
-// const { autenticacaoCPF, autenticacaoNome, autenticacaoTelefone, autenticacaoEmail, autenticacaoSenha } = require('../services/Validacoes');
-
-const ClientesDAO = require("../DAO/ClientesDAO");
-const Validacoes = require("../services/Validacoes");
-const bcrypt = require("bcrypt");
-const { default: axios } = require("axios");
+import ClientesDAO from "../DAO/ClientesDAO.js";
+import Validacoes from "../services/Validacoes.js";
+import { hash } from "bcrypt";
 
 class NovoCliente {
   constructor(novoCliente) {
@@ -104,7 +101,7 @@ class NovoCliente {
   static gerarSenhaHash(senha) {
     const custo = 12;
 
-    return bcrypt.hash(senha, custo);
+    return hash(senha, custo);
   }
   todasAsValidacoes() {
     this.autenticacaoCPF();
@@ -128,4 +125,4 @@ class NovoCliente {
   }
 }
 
-module.exports = NovoCliente;
+export default NovoCliente;

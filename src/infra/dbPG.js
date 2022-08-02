@@ -1,5 +1,5 @@
-const { Client } = require("pg");
-
+import pkg from "pg";
+const { Client } = pkg;
 const db = new Client({
   host: process.env.PG_HOST,
   database: process.env.PG_DATABASE,
@@ -7,8 +7,8 @@ const db = new Client({
   port: process.env.PG_PORT,
   password: process.env.PG_PASSWORD,
   ssl: {
-    rejectUnauthorized: false
-  }
+    rejectUnauthorized: false,
+  },
 });
 
 const execute = async (query) => {
@@ -43,4 +43,4 @@ execute(createTableQuery).then((result) => {
   }
 });
 
-module.exports = db;
+export default db;

@@ -1,8 +1,10 @@
-const Cliente = require("../models/Clientes");
-const criaTokenJWT = require("../services/Autenticacao");
-const blacklist = require("../../redis/manipula-blacklist");
-const { verify } = require("jsonwebtoken");
-const axios = require("axios").default;
+import Cliente from "../models/Clientes.js";
+import criaTokenJWT from "../services/Autenticacao.js";
+import blacklist from "../../redis/manipula-blacklist.js";
+import pkg from "jsonwebtoken";
+
+import axios from "axios";
+const { verify } = pkg;
 class ClientesController {
   static async cadastrarCliente(req, res) {
     try {
@@ -175,4 +177,4 @@ class ClientesController {
     }
   }
 }
-module.exports = ClientesController;
+export default ClientesController;

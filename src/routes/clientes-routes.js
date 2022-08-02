@@ -1,13 +1,30 @@
-const { Router } = require("express");
-const router = Router();
-const clientesController = require("../controllers/clientes-controllers");
-const { local, bearer } = require("../middlewares/middlewaresAutenticacao");
-
-module.exports = router
+import { Router } from "express";
+const clientesRoutes = Router();
+import clientesController from "../controllers/clientes-controllers.js";
+import MiddlewaresAutenticacao from "../middlewares/middlewaresAutenticacao.js";
+clientesRoutes
   .post("/cliente", clientesController.cadastrarCliente)
-  .post("/cliente/login", local, clientesController.login)
-  .get("/cliente/logout", bearer, clientesController.logout)
+  .post(
+    "/cliente/login",
+    MiddlewaresAutenticacao.local,
+    clientesController.login
+  )
+  .get(
+    "/cliente/logout",
+    MiddlewaresAutenticacao.bearer,
+    clientesController.logout
+  )
   .get("/clientes", clientesController.listarTodosOsClientes)
   .get("/cliente/:id", clientesController.listarClientePorId)
-  .delete("/cliente/:cpf", bearer, clientesController.deletarCliente)
-  .patch("/cliente/:cpf", bearer, clientesController.atualizarCliente);
+  .delete(
+    "/cliente/:cpf",
+    MiddlewaresAutenticacao.bearer,
+    clientesController.deletarCliente
+  )
+  .patch(
+    "/cliente/:cpf",
+    MiddlewaresAutenticacao.bearer,
+    clientesController.atualizarCliente
+  );
+
+export default clientesRoutes;

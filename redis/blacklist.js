@@ -1,12 +1,11 @@
-const { createClient } = require("redis");
+import { createClient } from "redis";
 
-// let blacklist;
 const blacklist = createClient({
   url: process.env.REDIS_URL,
-  password: process.env.REDIS_PASSWORD
+  password: process.env.REDIS_PASSWORD,
 });
 blacklist.on("connect", () => console.log("Connected to Redis!"));
 blacklist.on("error", (err) => console.log("Redis Client Error", err));
-blacklist.connect();
+await blacklist.connect();
 
-module.exports = blacklist;
+export default blacklist;

@@ -1,10 +1,9 @@
-require("dotenv").config();
-const app = require("./src/app");
+import "dotenv/config";
+import app from "./src/app.js";
 const port = process.env.PORT || 3000;
-
-require("./redis/blacklist");
+import "./redis/blacklist.js";
 const server = app.listen(port, () => {
   console.log(`Servidor rodando em: http://localhost:${port}/`);
 });
 
-module.exports = server;
+export default server;

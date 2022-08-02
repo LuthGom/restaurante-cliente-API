@@ -1,16 +1,13 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const cors = require("cors");
-const routes = require("./routes");
-const swaggerUi = require("swagger-ui-express");
-const swaggerDocs = require("./swagger.json");
-const {
-  localStrategy,
-  BearerStrategy,
-} = require("./middlewares/estrategias-autenticacao");
-const db = require("./infra/dbPG");
-localStrategy();
-BearerStrategy();
+import cors from "cors";
+import routes from "./routes/clientes-routes.js";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocs from "./swagger.json" assert { type: "json" };
+import EstrategiasAutenticacao from "./middlewares/estrategias-autenticacao.js";
+import db from "./infra/dbPG.js";
+EstrategiasAutenticacao.localStrategy();
+EstrategiasAutenticacao.BearerStrategy();
 
 app.use(express.json());
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
@@ -23,6 +20,6 @@ app.use(cors());
 app.use((req, res, next) => {
   next();
 });
-routes(app);
+app.use(routes);
 
-module.exports = app;
+export default app;

@@ -1,4 +1,4 @@
-const db = require("../infra/dbPG");
+import db from "../infra/dbPG.js";
 class ClientesDAO {
   static cadastrarCliente(novoCliente) {
     return new Promise((resolve, reject) => {
@@ -141,4 +141,4 @@ class ClientesDAO {
     });
   }
 }
-module.exports = ClientesDAO;
+export default ClientesDAO;
