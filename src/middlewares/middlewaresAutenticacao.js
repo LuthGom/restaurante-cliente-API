@@ -7,7 +7,7 @@ export default class MiddlewaresAutenticacao {
       { session: false },
       (erro, cliente, info) => {
         if (erro) {
-          return res.status(500).json({ erro: erro.message });
+          return res.status(400).json({ erro: erro.message });
         }
         if (!cliente) {
           return res.status(401).json();
