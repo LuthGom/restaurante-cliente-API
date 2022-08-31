@@ -2,7 +2,7 @@ import pkg from "jsonwebtoken";
 const { sign } = pkg;
 function criaTokenJWT(cliente) {
   const payload = {
-    cpf: cliente.email,
+    cpf: cliente.cpf,
   };
   const token = sign(payload, process.env.CHAVE_JWT, { expiresIn: "15min" });
   return token;
