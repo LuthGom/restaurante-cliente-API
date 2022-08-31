@@ -73,7 +73,7 @@ class NovoCliente {
         throw new Error("Email já cadastrado!");
       }
       if (
-        clienteAtualizado.senhaHash &&
+        clienteAtualizado.senhaHash !== dadosAntigos.senhaHash &&
         clienteAtualizado.senhaHash !== undefined
       ) {
         clienteAtualizado.senhaHash = await NovoCliente.gerarSenhaHash(
