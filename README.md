@@ -1,5 +1,5 @@
 <p align="center">
-<iframe src="https://drive.google.com/file/d/13bUQw6NeFpTEFxGutuXUyZbdbek3w-9f/preview" width="360" height="190" allow="autoplay"></iframe>
+<img src="./assets/restaurant-gif.gif">
 </p>
 
 ---
@@ -109,7 +109,7 @@ e rode o seguinte comando no terminal:</li>
 
 ### <span style="color:tomato; text-align: justify">COMO PEGAR E UTILIZAR O TOKEN GERADO PELO LOGIN:</span>
 
-<iframe src="https://drive.google.com/file/d/1CIPaDjQBGr6G9OmTLqLZDKF7LaYYdzL1/preview" width="640" height="480" allow="autoplay"></iframe>
+<img src="./assets/ilustracao-login.gif" />
 
 ## Autor 🌈
 
