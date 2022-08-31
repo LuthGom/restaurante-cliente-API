@@ -56,7 +56,8 @@ Este projeto faz parte do Trabalho Final da conclusão do Módulo 4 do curso de 
 ![Badge](https://img.shields.io/badge/"passportLocal"-"%5E1.0.0"-pink)<br>
 ![Badge](https://img.shields.io/badge/"passportHttpBearer"-"%5E1.0.1"-white)<br>
 ![Badge](https://img.shields.io/badge/"redis"-"%5E4.0.4"-black)<br>
-![Badge](https://img.shields.io/badge/"sqlite3"-"%5E5.0.2"-roxy)<br>
+![Badge](https://img.shields.io/badge/"sqlite3"-"%5E5.0.2"-tomato)<br>
+![Badge](https://img.shields.io/badge/"swaggerUiExpress"-"%5E6.2.2"-brown)<br>
 
 # <span style="color: tomato">Dependências de desenvolvimento:</span>
 
