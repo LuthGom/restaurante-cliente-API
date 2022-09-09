@@ -90,7 +90,7 @@ class ClientesController {
       return res.status(200).json({ cliente: cliente });
     } catch (error) {
       res.status(400).json({
-        message: error.message,
+        message: "cliente não encontrado! Por favor, tente novamente!",
         error: true,
       });
     }
