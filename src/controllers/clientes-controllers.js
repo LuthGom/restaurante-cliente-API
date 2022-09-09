@@ -164,7 +164,7 @@ class ClientesController {
           erro: false,
         });
       } else {
-        return res.satus(404).json({
+        return res.status(404).json({
           mensagem: "O cpf digitado não está cadastrado!",
           erro: true,
         });
