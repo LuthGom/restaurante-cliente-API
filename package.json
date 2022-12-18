@@ -2,7 +2,7 @@
   "name": "repositorio---tfm4",
   "version": "1.0.0",
   "description": "Trabalho final do módulo 4 de Dev. Web FullStack da Resilia Educação",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest",
     "start": "node server.js",
