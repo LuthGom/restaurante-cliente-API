@@ -9,8 +9,8 @@
   },
   "servers": [
     {
-      "url": "https://restaurant-client-api.herokuapp.com/",
-      "description": "API de test"
+      "url": "https://login-clients-api.onrender.com",
+      "description": "API de Cadastro e gerenciamento de clientes"
     },
     {
       "url": "http://www.codedrops.com",
